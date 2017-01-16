@@ -8,13 +8,16 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".SplashScreenActivity">
+        <activity android:name=".splashScreen.activity.SplashScreenActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".home.activity.HomeActivity" />
+        <activity android:name=".registerOrLogin.activity.RegisterOrLoginActivity" />
+        <activity android:name=".introScreen.activity.IntroScreenMainActivity"></activity>
     </application>
 
 </manifest>

@@ -1,7 +1,9 @@
-package com.pawan.schooldiary;
+package com.pawan.schooldiary.splashScreen.activity;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import com.pawan.schooldiary.R;
 
 public class SplashScreenActivity extends AppCompatActivity {
 
