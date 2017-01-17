@@ -3,21 +3,29 @@
     package="com.pawan.schooldiary">
 
     <application
+        android:name=".app.SchoolDiaryApplication_"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".splashScreen.activity.SplashScreenActivity">
+
+        </activity>
+        <activity android:name=".registerOrLogin.activity.RegisterOrLoginActivity_" />
+        <activity android:name=".introScreen.activity.IntroScreenMainActivity" />
+        <activity
+            android:name=".home.teacher.activity.TeacherHomeActivity"
+            android:label="@string/title_activity_teacher_home"
+            android:theme="@style/AppTheme.NoActionBar">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
-        <activity android:name=".home.activity.HomeActivity" />
-        <activity android:name=".registerOrLogin.activity.RegisterOrLoginActivity" />
-        <activity android:name=".introScreen.activity.IntroScreenMainActivity"></activity>
     </application>
 
 </manifest>

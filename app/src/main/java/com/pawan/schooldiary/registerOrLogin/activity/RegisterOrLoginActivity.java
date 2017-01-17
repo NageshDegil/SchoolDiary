@@ -5,6 +5,9 @@ import android.os.Bundle;
 
 import com.pawan.schooldiary.R;
 
+import org.androidannotations.annotations.EActivity;
+
+@EActivity(R.layout.activity_register_or_login)
 public class RegisterOrLoginActivity extends AppCompatActivity {
 
     @Override
