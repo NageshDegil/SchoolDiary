@@ -1,8 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    android:layout_weight="0.40"
+    android:background="#ffffff"
+    android:descendantFocusability="blocksDescendants"
+    android:orientation="horizontal">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_weight="0.20"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/contact_name"
+            android:textColor="#000"
+            android:layout_marginTop="30dp"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="28dp"
+            android:text="Name"
+            android:layout_gravity="center_vertical"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/contact_email"
+            android:text="Email"
+            android:textColor="#000"
+            android:layout_marginLeft="28dp"
+            android:layout_marginTop="5dp"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+
+            />
+
+    </LinearLayout>
 
 </LinearLayout>

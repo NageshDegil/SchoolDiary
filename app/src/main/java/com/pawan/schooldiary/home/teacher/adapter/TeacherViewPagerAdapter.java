@@ -3,8 +3,6 @@ package com.pawan.schooldiary.home.teacher.adapter;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
-
-import com.pawan.schooldiary.home.fragment.contacts.ContactsFragment_;
 import com.pawan.schooldiary.home.teacher.fragment.group.TeacherGroupFragment_;
 
 import java.util.ArrayList;
