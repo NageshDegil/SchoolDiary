@@ -18,6 +18,11 @@ public class Contact {
         this.imgUrl = imgUrl;
     }
 
+    public Contact(String name, String email) {
+        this.name = name;
+        this.email = email;
+    }
+
     public String getName() {
         return name;
     }
