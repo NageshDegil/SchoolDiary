@@ -21,11 +21,10 @@ import com.pawan.schooldiary.home.fragment.contacts.ContactsFragment_;
 import com.pawan.schooldiary.home.fragment.contacts.chat.ChatFragment_;
 import com.pawan.schooldiary.home.teacher.adapter.TeacherViewPagerAdapter;
 import com.pawan.schooldiary.home.teacher.fragment.group.TeacherGroupFragment_;
+import com.pawan.schooldiary.home.teacher.fragment.home.TeacherHomeFragment_;
 
 public class TeacherHomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-    private ViewPager viewPager;
-    private PagerAdapter pagerAdapter;
-    private TabLayout tabLayout;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,19 +52,13 @@ public class TeacherHomeActivity extends AppCompatActivity implements Navigation
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        tabLayout = (TabLayout) findViewById(R.id.tab_layout);
-        viewPager = (ViewPager) findViewById(R.id.view_pager);
-        setupViewPager(viewPager);
-        tabLayout.setupWithViewPager(viewPager);
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.content_teacher_home, new TeacherHomeFragment_())
+                .commit();
     }
 
-    private void setupViewPager(ViewPager viewPager) {
-        TeacherViewPagerAdapter adapter = new TeacherViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new TeacherGroupFragment_(), "Group");
-        adapter.addFragment(new ChatFragment_(), "Recent");
-        adapter.addFragment(new ContactsFragment_(), "Contacts");
-        viewPager.setAdapter(adapter);
-    }
+
 
     @Override
     public void onBackPressed() {
