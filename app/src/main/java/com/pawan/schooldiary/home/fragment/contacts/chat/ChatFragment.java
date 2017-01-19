@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.pawan.schooldiary.R;
+import com.pawan.schooldiary.app.UpdateFragmentHelper;
 import com.pawan.schooldiary.home.adapter.ChatAdapter;
 import com.pawan.schooldiary.home.model.Chat;
 
@@ -31,7 +32,7 @@ public class ChatFragment extends Fragment {
     private ChatAdapter chatAdapter;
 
     @AfterViews
-    void init() {
+    public void init() {
         initList();
         chatAdapter = new ChatAdapter(chatList);
         chatAdapter.notifyDataSetChanged();
@@ -53,5 +54,9 @@ public class ChatFragment extends Fragment {
         chatList.add(new Chat("Nothing", true));
     }
 
-
+    @Override
+    public void onResume() {
+        super.onResume();
+        init();
+    }
 }
