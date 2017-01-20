@@ -6,13 +6,14 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.pawan.schooldiary.R;
 import com.pawan.schooldiary.home.adapter.ContactAdapter;
+import com.pawan.schooldiary.home.fragment.chat.ChatFragment_;
 import com.pawan.schooldiary.home.model.Contact;
+import com.pawan.schooldiary.home.utils.Constants;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EFragment;
@@ -27,22 +28,20 @@ public class ContactsFragment extends Fragment {
 
     @ViewById(R.id.recycler_view)
     RecyclerView recyclerView;
+
     private ContactAdapter contactAdapter;
 
     @AfterViews
-    void init()
-    {
-      contactAdapter = new ContactAdapter(contactList);
-
-      RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
-      recyclerView.setLayoutManager(layoutManager);
-      recyclerView.setItemAnimator(new DefaultItemAnimator());
-      recyclerView.setAdapter(contactAdapter);
-      contactList();
+    void init() {
+        contactAdapter = new ContactAdapter(contactList, this);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView.setAdapter(contactAdapter);
+        contactList();
     }
 
-    private void contactList()
-    {
+    private void contactList() {
         Contact contact = new Contact("Divya","Email : divya@gmail.com");
         contactList.add(contact);
 
@@ -59,6 +58,15 @@ public class ContactsFragment extends Fragment {
         contactList.add(contact);
 
         contactAdapter.notifyDataSetChanged();
+    }
+
+    public void loadChat(String teacherEmail, String parentsEmail) {
+        Bundle bundle = new Bundle();
+        bundle.putString(Constants.TEACHER_KEY, teacherEmail);
+        bundle.putString(Constants.PARENTS_KEY, parentsEmail);
+        ChatFragment_ chatFragment = new ChatFragment_();
+        chatFragment.setArguments(bundle);
+        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.content_teacher_home, chatFragment).commit();
     }
 
 }

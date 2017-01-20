@@ -2,14 +2,22 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_weight="0.40"
     android:background="#ffffff"
     android:descendantFocusability="blocksDescendants"
     android:orientation="horizontal">
 
-    <LinearLayout
+    <ImageView
+        android:scaleType="centerCrop"
+        android:background="@drawable/circular_image"
+        android:layout_weight="0.8"
+        android:id="@+id/image_view"
         android:layout_width="match_parent"
-        android:layout_weight="0.20"
+        android:layout_height="80dp" />
+
+    <LinearLayout
+        android:layout_marginLeft="20dp"
+        android:layout_width="match_parent"
+        android:layout_weight="0.2"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
@@ -18,9 +26,8 @@
             android:layout_height="wrap_content"
             android:id="@+id/contact_name"
             android:textColor="#000"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="15dp"
             android:layout_alignParentTop="true"
-            android:layout_marginLeft="28dp"
             android:text="Name"
             android:layout_gravity="center_vertical"
             android:textAppearance="?android:attr/textAppearanceMedium"
@@ -32,7 +39,6 @@
             android:id="@+id/contact_email"
             android:text="Email"
             android:textColor="#000"
-            android:layout_marginLeft="28dp"
             android:layout_marginTop="5dp"
             android:textAppearance="?android:attr/textAppearanceSmall"
 

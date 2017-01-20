@@ -21,6 +21,14 @@ import java.util.List;
 public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.MyViewHolder> {
     private List<Chat> chatList = new ArrayList<>();
 
+    public List<Chat> getChatList() {
+        return chatList;
+    }
+
+    public void setChatList(List<Chat> chatList) {
+        this.chatList = chatList;
+    }
+
     public ChatAdapter(List<Chat> chats) {
         this.chatList = chats;
     }
@@ -50,15 +58,14 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.MyViewHolder> 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
         Chat chat = chatList.get(position);
-        if(chat.isRight()) {
+
+        if(chat.getWhich().equals("a")) {
             holder.linearLayoutLeft.setVisibility(View.GONE);
-            holder.textViewRightChat.setText(chat.getMessage());
+            holder.textViewRightChat.setText(chat.getMsg());
         } else {
             holder.linearLayoutRight.setVisibility(View.GONE);
-            holder.textViewLeftChat.setText(chat.getMessage());
+            holder.textViewLeftChat.setText(chat.getMsg());
         }
-
-
     }
 
     @Override

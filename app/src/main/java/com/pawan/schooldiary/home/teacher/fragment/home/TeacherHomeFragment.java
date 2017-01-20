@@ -8,11 +8,12 @@ import android.support.v4.view.ViewPager;
 
 import com.pawan.schooldiary.R;
 import com.pawan.schooldiary.home.fragment.contacts.ContactsFragment_;
-import com.pawan.schooldiary.home.fragment.contacts.chat.ChatFragment_;
+import com.pawan.schooldiary.home.fragment.chat.ChatFragment_;
 import com.pawan.schooldiary.home.model.ViewPagerHelper;
 import com.pawan.schooldiary.home.teacher.activity.TeacherHomeActivity;
 import com.pawan.schooldiary.home.teacher.adapter.TeacherViewPagerAdapter;
 import com.pawan.schooldiary.home.teacher.fragment.group.TeacherGroupFragment_;
+
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EFragment;
@@ -40,7 +41,7 @@ public class TeacherHomeFragment extends Fragment implements ViewPagerHelper{
     public void setupViewPager(ViewPager viewPager) {
         TeacherViewPagerAdapter adapter = new TeacherViewPagerAdapter(getActivity().getSupportFragmentManager());
         adapter.addFragment(new TeacherGroupFragment_(), "Group");
-        adapter.addFragment(new ChatFragment_(), "Recent");
+        adapter.addFragment(new ContactsFragment_(), "Recent");
         adapter.addFragment(new ContactsFragment_(), "Contacts");
         viewPager.setAdapter(adapter);
     }
@@ -51,9 +52,4 @@ public class TeacherHomeFragment extends Fragment implements ViewPagerHelper{
         return this.viewPager;
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        init();
-    }
 }

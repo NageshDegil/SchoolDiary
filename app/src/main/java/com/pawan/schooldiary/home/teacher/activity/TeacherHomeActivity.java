@@ -23,15 +23,12 @@ import android.view.MenuItem;
 import com.pawan.schooldiary.R;
 import com.pawan.schooldiary.app.BackHandlerInterface;
 import com.pawan.schooldiary.app.OnBackStackChangedListener;
-import com.pawan.schooldiary.home.fragment.contacts.ContactsFragment_;
-import com.pawan.schooldiary.home.fragment.contacts.chat.ChatFragment_;
 import com.pawan.schooldiary.home.model.ViewPagerHelper;
-import com.pawan.schooldiary.home.teacher.adapter.TeacherViewPagerAdapter;
-import com.pawan.schooldiary.home.teacher.fragment.group.TeacherGroupFragment_;
 import com.pawan.schooldiary.home.teacher.fragment.home.TeacherHomeFragment_;
 import com.pawan.schooldiary.home.teacher.fragment.profile.ProfileFragment_;
 
-public class TeacherHomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, BackHandlerInterface, ViewPagerHelper {
+
+public class TeacherHomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, ViewPagerHelper {
     private OnBackStackChangedListener onBackStackChangedListener;
     private ViewPagerHelper viewPagerHelper;
 
@@ -60,11 +57,14 @@ public class TeacherHomeActivity extends AppCompatActivity implements Navigation
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        replaceFragment(new TeacherHomeFragment_(), true);
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.content_teacher_home, new TeacherHomeFragment_())
+                .commit();
 
-        onBackStackChangedListener = new OnBackStackChangedListener(getSupportFragmentManager());
-        getSupportFragmentManager().addOnBackStackChangedListener(onBackStackChangedListener);
-        onBackStackChangedListener.onBackStackChanged();
+        //onBackStackChangedListener = new OnBackStackChangedListener(getSupportFragmentManager());
+        //getSupportFragmentManager().addOnBackStackChangedListener(onBackStackChangedListener);
+        //onBackStackChangedListener.onBackStackChanged();
     }
 
     public void initViewPagerHelper(Fragment fragment) {
@@ -78,11 +78,8 @@ public class TeacherHomeActivity extends AppCompatActivity implements Navigation
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
-        } else if(getSupportFragmentManager().getBackStackEntryCount() == 1) {
-            backPressedOnViewPager();
-        } else if(onBackStackChangedListener.getSelectedFragment() != null) {
-            getSupportFragmentManager().popBackStack();
-            removeCurrentFragment();
+        } else {
+            super.onBackPressed();
         }
     }
 
@@ -140,15 +137,13 @@ public class TeacherHomeActivity extends AppCompatActivity implements Navigation
         } else if (id == R.id.nav_send) {
 
         }
-        replaceFragment(fragment, true);
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.content_teacher_home, fragment)
+                .commit();
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
-    }
-
-    @Override
-    public void setSelectedFragment(Fragment selectedFragment) {
-
     }
 
     private void removeCurrentFragment() {
