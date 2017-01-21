@@ -8,6 +8,6 @@ public class Constants {
     public static final String DB_NAME = "chats";
 
     //SP
-    public static final String TEACHER_KEY = "teacher_key";
-    public static final String PARENTS_KEY = "parents_key";
+    public static final String TEACHER_EMAIL_KEY = "teacher_email_key";
+    public static final String PARENTS_EMAIL_KEY = "parents_email_key";
 }

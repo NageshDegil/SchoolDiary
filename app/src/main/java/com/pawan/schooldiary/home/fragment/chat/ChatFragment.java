@@ -22,7 +22,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.pawan.schooldiary.R;
 import com.pawan.schooldiary.app.SchoolDiaryApplication;
-import com.pawan.schooldiary.app.UpdateFragmentHelper;
 import com.pawan.schooldiary.home.adapter.ChatAdapter;
 import com.pawan.schooldiary.home.model.Chat;
 import com.pawan.schooldiary.home.teacher.service.TeacherHomeService;
@@ -34,7 +33,6 @@ import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.ViewById;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import rx.Subscriber;
@@ -67,8 +65,8 @@ public class ChatFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        teacherEmail = getArguments().getString(Constants.TEACHER_KEY);
-        parentsEmail = getArguments().getString(Constants.PARENTS_KEY);
+        teacherEmail = getArguments().getString(Constants.TEACHER_EMAIL_KEY);
+        parentsEmail = getArguments().getString(Constants.PARENTS_EMAIL_KEY);
         return super.onCreateView(inflater, container, savedInstanceState);
     }
 

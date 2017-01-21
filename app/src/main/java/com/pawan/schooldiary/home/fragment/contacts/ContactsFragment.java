@@ -6,8 +6,6 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
-import android.widget.ImageView;
 
 import com.pawan.schooldiary.R;
 import com.pawan.schooldiary.home.adapter.ContactAdapter;
@@ -62,8 +60,8 @@ public class ContactsFragment extends Fragment {
 
     public void loadChat(String teacherEmail, String parentsEmail) {
         Bundle bundle = new Bundle();
-        bundle.putString(Constants.TEACHER_KEY, teacherEmail);
-        bundle.putString(Constants.PARENTS_KEY, parentsEmail);
+        bundle.putString(Constants.TEACHER_EMAIL_KEY, teacherEmail);
+        bundle.putString(Constants.PARENTS_EMAIL_KEY, parentsEmail);
         ChatFragment_ chatFragment = new ChatFragment_();
         chatFragment.setArguments(bundle);
         getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.content_teacher_home, chatFragment).commit();
