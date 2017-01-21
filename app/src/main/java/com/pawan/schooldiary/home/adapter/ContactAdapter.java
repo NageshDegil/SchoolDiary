@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.pawan.schooldiary.R;
 import com.pawan.schooldiary.home.fragment.contacts.ContactsFragment;
 import com.pawan.schooldiary.home.model.Contact;
+import com.pawan.schooldiary.home.model.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +21,7 @@ import java.util.List;
  */
 
 public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.MyViewHolder> {
-    private List<Contact> contactList;
+    private List<User> contactList;
     private Fragment fragment;
     private interface ItemClickListener {
         void onClick(View view, int position, boolean isLongClick);
@@ -47,7 +48,7 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.MyViewHo
         }
     }
 
-    public ContactAdapter(List<Contact> contactList, Fragment fragment) {
+    public ContactAdapter(List<User> contactList, Fragment fragment) {
         this.contactList = contactList;
         this.fragment = fragment;
     }
@@ -60,14 +61,14 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.MyViewHo
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
-        final Contact contact = contactList.get(position);
+        final User contact = contactList.get(position);
         holder.contactName.setText(contact.getName());
         holder.contactEmail.setText(contact.getEmail());
         holder.setOnClickListener(new ItemClickListener() {
             @Override
             public void onClick(View view, int position, boolean isLongClick) {
                 if(fragment instanceof ContactsFragment)
-                    ((ContactsFragment)fragment).loadChat("a", contact.getEmail());
+                    ((ContactsFragment)fragment).loadChat(contact);
             }
         });
     }

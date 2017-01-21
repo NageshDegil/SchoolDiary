@@ -1,6 +1,7 @@
 package com.pawan.schooldiary.home.teacher.service;
 
 import com.pawan.schooldiary.home.model.Chat;
+import com.pawan.schooldiary.home.model.User;
 
 
 import java.util.List;
@@ -22,4 +23,6 @@ public interface TeacherHomeService {
 
     @POST("/SchoolDiary_web/index.php/insert-chat")
     Observable<List<Chat>> insertChat(@Body Chat chat);
+
+
 }

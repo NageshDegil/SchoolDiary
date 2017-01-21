@@ -24,8 +24,12 @@ import com.pawan.schooldiary.R;
 import com.pawan.schooldiary.app.SchoolDiaryApplication;
 import com.pawan.schooldiary.home.adapter.ChatAdapter;
 import com.pawan.schooldiary.home.model.Chat;
+import com.pawan.schooldiary.home.model.RecentChats;
+import com.pawan.schooldiary.home.model.User;
 import com.pawan.schooldiary.home.teacher.service.TeacherHomeService;
 import com.pawan.schooldiary.home.utils.Constants;
+import com.pawan.schooldiary.home.utils.FileDBUtils;
+import com.pawan.schooldiary.home.utils.Utils;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.App;
@@ -33,6 +37,7 @@ import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.ViewById;
 
+import java.util.HashMap;
 import java.util.List;
 
 import rx.Subscriber;
@@ -60,13 +65,12 @@ public class ChatFragment extends Fragment {
     private FirebaseRecyclerAdapter<Chat, MyViewHolder> firebaseAdapter;
     private DatabaseReference databaseReference;
     private LinearLayoutManager linearLayoutManager;
-    private String teacherEmail, parentsEmail;
+    private User user;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        teacherEmail = getArguments().getString(Constants.TEACHER_EMAIL_KEY);
-        parentsEmail = getArguments().getString(Constants.PARENTS_EMAIL_KEY);
+        user = getArguments().getParcelable(Constants.RECEIVER_EMAIL);
         return super.onCreateView(inflater, container, savedInstanceState);
     }
 
@@ -81,7 +85,7 @@ public class ChatFragment extends Fragment {
                 Chat.class,
                 R.layout.chat_layout,
                 MyViewHolder.class,
-                databaseReference.child(Constants.DB_NAME).child(createDB(teacherEmail, parentsEmail)))
+                databaseReference.child(Constants.DB_NAME).child(createDB(user.getEmail())))
         {
             @Override
             protected void populateViewHolder(MyViewHolder holder, Chat chat, int position) {
@@ -103,9 +107,9 @@ public class ChatFragment extends Fragment {
                 int lastVisiblePosition = linearLayoutManager.findLastCompletelyVisibleItemPosition();
                 // If the recycler view is initially being loaded or the user is at the bottom of the list, scroll
                 // to the bottom of the list to show the newly added message.
-                if (lastVisiblePosition == -1 || (positionStart >= (friendlyMessageCount - 1) && lastVisiblePosition == (positionStart - 1))) {
+                /*if (lastVisiblePosition == -1 || (positionStart >= (friendlyMessageCount - 1) && lastVisiblePosition == (positionStart - 1))) {
                     recyclerView.scrollToPosition(positionStart);
-                }
+                }*/
             }
         });
 
@@ -170,35 +174,10 @@ public class ChatFragment extends Fragment {
 
     @Click(R.id.image_view_send_msg)
     public void sendMsg() {
-        /*teacherHomeService.insertChat(new Chat("a", "b", editTextChat.getText().toString()))
-                .subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<List<Chat>>() {
-                    @Override
-                    public void onCompleted() {
-
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-
-                    }
-
-                    @Override
-                    public void onNext(List<Chat> chats) {
-                        Chat chat = chatList.get(chatList.size()-1);
-                        for (Chat newChat : chats) {
-                            if(newChat.getId() > chat.getId())
-                                chatList.add(newChat);
-                        }
-                        chatAdapter.setChatList(chatList);
-                        chatAdapter.notifyDataSetChanged();
-                        editTextChat.setText("");
-                    }
-                });*/
-
-        Chat chat = new Chat("a","b",editTextChat.getText().toString(), "T");
-        databaseReference.child(Constants.DB_NAME).child(createDB(teacherEmail, parentsEmail)).push().setValue(chat);
+        Chat chat = new Chat(getContext(),user.getEmail(),editTextChat.getText().toString(), Utils.readPreferenceData(schoolDiaryApplication.getApplicationContext(), Constants.LOGIN_TYPE, ""));
+        databaseReference.child(Constants.DB_NAME).child(createDB(user.getEmail())).push().setValue(chat);
         editTextChat.setText("");
+        recentChats();
     }
 
 
@@ -218,8 +197,16 @@ public class ChatFragment extends Fragment {
         }
     }
 
-    private String createDB(String teacher, String parents) {
-        String senderDB = "demo", receiverDB = "omed";
+    private String createDB(String receiverEmail) {
+        String type = Utils.readPreferenceData(schoolDiaryApplication.getApplicationContext(), Constants.LOGIN_TYPE, "");
+        String senderDB = "demo", receiverDB = "omed", teacher = "", parents = "";
+        if(type.equals("T")) {
+            teacher = Utils.readPreferenceData(schoolDiaryApplication.getApplicationContext(), Constants.TEACHER_EMAIL_KEY, "");
+            parents = receiverEmail;
+        } else {
+            parents = Utils.readPreferenceData(schoolDiaryApplication.getApplicationContext(), Constants.PARENTS_EMAIL_KEY, "");
+            teacher = receiverEmail;
+        }
         int senderEnd = teacher.indexOf("@");
         if (senderEnd != -1)
             senderDB = teacher.substring(0, senderEnd);
@@ -227,5 +214,19 @@ public class ChatFragment extends Fragment {
         if (receiverEnd != -1)
             receiverDB = parents.substring(0, receiverEnd);
         return senderDB+receiverDB;
+    }
+
+
+    private void recentChats() {
+        FileDBUtils<RecentChats> fileDBUtils = new FileDBUtils<>(schoolDiaryApplication.getApplicationContext(), FileDBUtils.RECENT_CHATS, RecentChats.class, FileDBUtils.USER_DIR);
+        RecentChats recentChats = fileDBUtils.readObject();
+        if(recentChats != null) {
+            recentChats.getUserMap().put(user.getEmail(), user);
+        } else {
+            HashMap<String, User> hashMap = new HashMap<>();
+            hashMap.put(user.getEmail(), user);
+            recentChats = new RecentChats(hashMap);
+        }
+        fileDBUtils.saveObject(recentChats);
     }
 }

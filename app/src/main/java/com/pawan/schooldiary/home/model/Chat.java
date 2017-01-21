@@ -1,5 +1,10 @@
 package com.pawan.schooldiary.home.model;
 
+import android.content.Context;
+
+import com.pawan.schooldiary.home.utils.Constants;
+import com.pawan.schooldiary.home.utils.Utils;
+
 /**
  * Created by pawan on 17/1/17.
  */
@@ -20,6 +25,18 @@ public class Chat {
     public Chat(String teacher, String parents, String msg, String which) {
         this.teacher = teacher;
         this.parents = parents;
+        this.msg = msg;
+        this.which = which;
+    }
+
+    public Chat(Context context, String email, String msg, String which) {
+        if(which.equals("T")) {
+            this.teacher = Utils.readPreferenceData(context.getApplicationContext(), Constants.TEACHER_EMAIL_KEY, "");
+            this.parents = email;
+        } else {
+            this.parents = Utils.readPreferenceData(context.getApplicationContext(), Constants.PARENTS_EMAIL_KEY, "");
+            this.teacher = email;
+        }
         this.msg = msg;
         this.which = which;
     }
