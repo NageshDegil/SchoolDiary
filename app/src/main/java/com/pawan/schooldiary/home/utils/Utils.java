@@ -1,6 +1,7 @@
 package com.pawan.schooldiary.home.utils;
 
 import android.content.Context;
+import android.widget.Toast;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
@@ -8,7 +9,8 @@ import java.io.File;
 
 /**
  * Created by pawan on 21/1/17.
- */
+*/
+
 
 public class Utils {
 
@@ -137,5 +139,14 @@ public class Utils {
                 tempPath = tempPath + dir + "/";
             }
         }
+    }
+
+
+
+    public static void generateToast(Context context, String message, boolean flag) {
+        if(flag)
+            Toast.makeText(context, message, Toast.LENGTH_LONG).show();
+        else
+            Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
     }
 }
