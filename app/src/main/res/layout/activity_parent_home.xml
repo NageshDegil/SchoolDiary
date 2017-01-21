@@ -9,17 +9,17 @@
     tools:openDrawer="start">
 
     <include
-        layout="@layout/app_bar_teacher_home"
+        layout="@layout/app_bar_parent_home"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
     <android.support.design.widget.NavigationView
-        android:id="@+id/teacher_nav_view"
+        android:id="@+id/parent_nav_view"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
-        app:headerLayout="@layout/nav_header_teacher_home"
-        app:menu="@menu/activity_teacher_home_drawer" />
+        app:headerLayout="@layout/nav_header_parent_home"
+        app:menu="@menu/activity_parent_home_drawer" />
 
 </android.support.v4.widget.DrawerLayout>

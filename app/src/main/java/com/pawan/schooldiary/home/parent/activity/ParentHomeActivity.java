@@ -1,15 +1,12 @@
-package com.pawan.schooldiary.home.teacher.activity;
+package com.pawan.schooldiary.home.parent.activity;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -21,21 +18,21 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.pawan.schooldiary.R;
-import com.pawan.schooldiary.app.BackHandlerInterface;
 import com.pawan.schooldiary.app.OnBackStackChangedListener;
 import com.pawan.schooldiary.home.model.ViewPagerHelper;
+import com.pawan.schooldiary.home.parent.fragment.home.ParentHomeFragment_;
 import com.pawan.schooldiary.home.teacher.fragment.home.TeacherHomeFragment_;
-import com.pawan.schooldiary.home.teacher.fragment.profile.ProfileFragment_;
 
+public class ParentHomeActivity extends AppCompatActivity
+        implements NavigationView.OnNavigationItemSelectedListener,ViewPagerHelper {
 
-public class TeacherHomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, ViewPagerHelper {
     private OnBackStackChangedListener onBackStackChangedListener;
     private ViewPagerHelper viewPagerHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_teacher_home);
+        setContentView(R.layout.activity_parent_home);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -47,7 +44,6 @@ public class TeacherHomeActivity extends AppCompatActivity implements Navigation
                         .setAction("Action", null).show();
             }
         });
-        fab.hide();
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -55,23 +51,16 @@ public class TeacherHomeActivity extends AppCompatActivity implements Navigation
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.teacher_nav_view);
+        NavigationView navigationView = (NavigationView) findViewById(R.id.parent_nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.content_teacher_home, new TeacherHomeFragment_())
+                .replace(R.id.content_parent_home, new ParentHomeFragment_())
                 .commit();
-
-        //onBackStackChangedListener = new OnBackStackChangedListener(getSupportFragmentManager());
-        //getSupportFragmentManager().addOnBackStackChangedListener(onBackStackChangedListener);
-        //onBackStackChangedListener.onBackStackChanged();
     }
-
     public void initViewPagerHelper(Fragment fragment) {
         viewPagerHelper = (ViewPagerHelper) fragment;
     }
-
-
 
     @Override
     public void onBackPressed() {
@@ -84,7 +73,7 @@ public class TeacherHomeActivity extends AppCompatActivity implements Navigation
     }
 
     private void backPressedOnViewPager() {
-        if(getSupportFragmentManager().getBackStackEntryAt(0).getName().equals("com.pawan.schooldiary.home.teacher.fragment.home.TeacherHomeFragment_")) {
+        if(getSupportFragmentManager().getBackStackEntryAt(0).getName().equals("com.pawan.schooldiary.home.parent.fragment.home.ParentHomeFragment_")) {
             if(viewPagerHelper.getViewPager().getCurrentItem() == 0)
                 finish();
             else
@@ -95,11 +84,10 @@ public class TeacherHomeActivity extends AppCompatActivity implements Navigation
     }
 
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.teacher_home, menu);
+        getMenuInflater().inflate(R.menu.parent_home, menu);
         return true;
     }
 
@@ -123,12 +111,14 @@ public class TeacherHomeActivity extends AppCompatActivity implements Navigation
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-        Fragment fragment = new TeacherHomeFragment_();
+        Fragment fragment = new ParentHomeFragment_();
+
         if (id == R.id.nav_camera) {
-            fragment = new ProfileFragment_();
-        } else if (id == R.id.nav_send) {
+            // Handle the camera action
+        }  else if (id == R.id.nav_send) {
 
         }
+
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.content_teacher_home, fragment)
@@ -141,7 +131,7 @@ public class TeacherHomeActivity extends AppCompatActivity implements Navigation
     private void removeCurrentFragment() {
         if (!this.isFinishing()) {
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            Fragment currentFrag = getSupportFragmentManager().findFragmentById(R.id.content_teacher_home);
+            Fragment currentFrag = getSupportFragmentManager().findFragmentById(R.id.content_parent_home);
             if (currentFrag != null)
                 transaction.remove(currentFrag);
 
@@ -156,7 +146,7 @@ public class TeacherHomeActivity extends AppCompatActivity implements Navigation
             FragmentManager manager = getSupportFragmentManager();
 
             /* we are using teh existing fragment here to prevent it to be added to to backstack if teh user presses it twice */
-            Fragment existingFrag = manager.findFragmentById(R.id.content_teacher_home);
+            Fragment existingFrag = manager.findFragmentById(R.id.content_parent_home);
             Fragment stackFragment = manager.findFragmentByTag(fragmentTag);
             if (existingFrag != null && existingFrag.getClass().getCanonicalName().equals(fragment.getClass().getCanonicalName())) {
                 manager.beginTransaction().detach(existingFrag).attach(existingFrag).commitNow();
@@ -165,7 +155,7 @@ public class TeacherHomeActivity extends AppCompatActivity implements Navigation
 
             if (!this.isFinishing()) {
                 FragmentTransaction ft = manager.beginTransaction();
-                ft.replace(R.id.content_teacher_home, stackFragment == null ? fragment : stackFragment);
+                ft.replace(R.id.content_parent_home, stackFragment == null ? fragment : stackFragment);
 
                 if (addToBackStack) {
                     ft.addToBackStack(backStateName);
