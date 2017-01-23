@@ -178,6 +178,7 @@ public class ChatFragment extends Fragment {
         databaseReference.child(Constants.DB_NAME).child(createDB(user.getEmail())).push().setValue(chat);
         editTextChat.setText("");
         recentChats();
+        // TODO add chat info to server
     }
 
 

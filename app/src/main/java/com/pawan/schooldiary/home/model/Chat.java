@@ -22,6 +22,16 @@ public class Chat {
     public Chat() {
     }
 
+    public Chat(Context context, String email) {
+        if(which.equals("T")) {
+            this.teacher = Utils.readPreferenceData(context.getApplicationContext(), Constants.TEACHER_EMAIL_KEY, "");
+            this.parents = email;
+        } else {
+            this.parents = Utils.readPreferenceData(context.getApplicationContext(), Constants.PARENTS_EMAIL_KEY, "");
+            this.teacher = email;
+        }
+    }
+
     public Chat(String teacher, String parents, String msg, String which) {
         this.teacher = teacher;
         this.parents = parents;
