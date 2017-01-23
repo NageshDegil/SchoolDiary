@@ -7,6 +7,7 @@ import android.os.Bundle;
 
 import com.pawan.schooldiary.R;
 import com.pawan.schooldiary.home.parent.activity.ParentHomeActivity;
+import com.pawan.schooldiary.registerOrLogin.activity.RegisterOrLoginActivity;
 import com.pawan.schooldiary.registerOrLogin.activity.RegisterOrLoginActivity_;
 
 public class SplashScreenActivity extends AppCompatActivity {
@@ -19,7 +20,7 @@ public class SplashScreenActivity extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent intent = new Intent(SplashScreenActivity.this, RegisterOrLoginActivity_.class);
+                Intent intent = new Intent(SplashScreenActivity.this, RegisterOrLoginActivity.class);
                 startActivity(intent);
             }
         }, 1000);
