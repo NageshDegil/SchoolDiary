@@ -1,5 +1,6 @@
 package com.pawan.schooldiary.home.model;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -7,17 +8,17 @@ import java.util.Map;
  */
 
 public class RecentChats {
-    private Map<String, User> userMap;
+    private List<User> userList;
 
-    public RecentChats(Map<String, User> userMap) {
-        this.userMap = userMap;
+    public RecentChats(List<User> userList) {
+        this.userList = userList;
     }
 
-    public Map<String, User> getUserMap() {
-        return userMap;
+    public List<User> getUserList() {
+        return userList;
     }
 
-    public void setUserMap(Map<String, User> userMap) {
-        this.userMap = userMap;
+    public void setUserList(List<User> userList) {
+        this.userList = userList;
     }
 }

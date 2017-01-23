@@ -32,6 +32,11 @@ public class Chat {
         }
     }
 
+    public Chat(String email, String which) {
+        this.teacher = email;
+        this.which = which;
+    }
+
     public Chat(String teacher, String parents, String msg, String which) {
         this.teacher = teacher;
         this.parents = parents;

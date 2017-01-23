@@ -23,9 +23,13 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.pawan.schooldiary.R;
 import com.pawan.schooldiary.app.SchoolDiaryApplication;
 import com.pawan.schooldiary.home.adapter.ChatAdapter;
+import com.pawan.schooldiary.home.adapter.ContactAdapter;
+import com.pawan.schooldiary.home.fragment.contacts.ContactsFragment;
 import com.pawan.schooldiary.home.model.Chat;
 import com.pawan.schooldiary.home.model.RecentChats;
+import com.pawan.schooldiary.home.model.Status;
 import com.pawan.schooldiary.home.model.User;
+import com.pawan.schooldiary.home.service.CommonService;
 import com.pawan.schooldiary.home.teacher.service.TeacherHomeService;
 import com.pawan.schooldiary.home.utils.Constants;
 import com.pawan.schooldiary.home.utils.FileDBUtils;
@@ -40,6 +44,7 @@ import org.androidannotations.annotations.ViewById;
 import java.util.HashMap;
 import java.util.List;
 
+import okhttp3.ResponseBody;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -66,6 +71,7 @@ public class ChatFragment extends Fragment {
     private DatabaseReference databaseReference;
     private LinearLayoutManager linearLayoutManager;
     private User user;
+    private CommonService commonService;
 
     @Nullable
     @Override
@@ -76,6 +82,7 @@ public class ChatFragment extends Fragment {
 
     @AfterViews
     public void init() {
+        commonService = schoolDiaryApplication.retrofit.create(CommonService.class);
         databaseReference = FirebaseDatabase.getInstance().getReference();
         linearLayoutManager = new LinearLayoutManager(getActivity());
         linearLayoutManager.setStackFromEnd(true);
@@ -219,7 +226,7 @@ public class ChatFragment extends Fragment {
 
 
     private void recentChats() {
-        FileDBUtils<RecentChats> fileDBUtils = new FileDBUtils<>(schoolDiaryApplication.getApplicationContext(), FileDBUtils.RECENT_CHATS, RecentChats.class, FileDBUtils.USER_DIR);
+        /*FileDBUtils<RecentChats> fileDBUtils = new FileDBUtils<>(schoolDiaryApplication.getApplicationContext(), FileDBUtils.RECENT_CHATS, RecentChats.class, FileDBUtils.USER_DIR);
         RecentChats recentChats = fileDBUtils.readObject();
         if(recentChats != null) {
             recentChats.getUserMap().put(user.getEmail(), user);
@@ -228,6 +235,26 @@ public class ChatFragment extends Fragment {
             hashMap.put(user.getEmail(), user);
             recentChats = new RecentChats(hashMap);
         }
-        fileDBUtils.saveObject(recentChats);
+        fileDBUtils.saveObject(recentChats);*/
+    }
+
+    private void addRecentChat() {
+        commonService.addRecentChat(new Chat(getContext(), user.getEmail()))
+                .subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<ResponseBody>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(ResponseBody responseBody) {
+                    }
+                });
     }
 }
