@@ -1,4 +1,4 @@
-package com.pawan.schooldiary.home.teacher.adapter;
+package com.pawan.schooldiary.home.adapter;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -16,12 +16,12 @@ import java.util.Map;
  * Created by pawan on 17/1/17.
  */
 
-public class TeacherViewPagerAdapter extends FragmentStatePagerAdapter {
+public class ViewPagerAdapter extends FragmentStatePagerAdapter {
     private final List<Fragment> fragmentList = new ArrayList<>();
     private final List<String> fragmentTitleList = new ArrayList<>();
     private FragmentManager fragmentManager;
 
-    public TeacherViewPagerAdapter(FragmentManager fm) {
+    public ViewPagerAdapter(FragmentManager fm) {
         super(fm);
         fragmentManager = fm;
     }

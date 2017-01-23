@@ -18,6 +18,7 @@ import com.mobsandgeeks.saripaar.annotation.Password;
 import com.pawan.schooldiary.R;
 import com.pawan.schooldiary.app.SchoolDiaryApplication;
 import com.pawan.schooldiary.home.model.User;
+import com.pawan.schooldiary.home.parents.activity.ParentsHomeActivity;
 import com.pawan.schooldiary.home.teacher.activity.TeacherHomeActivity;
 import com.pawan.schooldiary.home.utils.Constants;
 import com.pawan.schooldiary.home.utils.Utils;
@@ -110,7 +111,11 @@ public class LoginFragment extends Fragment {
 
                                @Override
                                public void onNext(User user) {
-                                   Intent intent = new Intent(getActivity(), TeacherHomeActivity.class);
+                                   Intent intent;
+                                   if(type.equals("T"))
+                                       intent = new Intent(getActivity(), TeacherHomeActivity.class);
+                                   else
+                                       intent = new Intent(getActivity(), ParentsHomeActivity.class);
                                    startActivity(intent);
                                    initSP(type, email);
                                }

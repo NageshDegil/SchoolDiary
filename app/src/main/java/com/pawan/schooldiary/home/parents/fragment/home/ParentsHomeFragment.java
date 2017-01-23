@@ -7,7 +7,9 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 
 import com.pawan.schooldiary.R;
+import com.pawan.schooldiary.home.adapter.ViewPagerAdapter;
 import com.pawan.schooldiary.home.fragment.contacts.ContactsFragment_;
+import com.pawan.schooldiary.home.fragment.recent.RecentChatsFragment_;
 import com.pawan.schooldiary.home.model.ViewPagerHelper;
 import com.pawan.schooldiary.home.parents.activity.ParentsHomeActivity;
 import com.pawan.schooldiary.home.parents.adapter.ParentViewPagerAdapter;
@@ -39,8 +41,8 @@ public class ParentsHomeFragment extends Fragment implements ViewPagerHelper{
     }
 
     public void setupViewPager(ViewPager viewPager) {
-        ParentViewPagerAdapter adapter = new ParentViewPagerAdapter(getActivity().getSupportFragmentManager());
-        adapter.addFragment(new ContactsFragment_(), "Recent");
+        ViewPagerAdapter adapter = new ViewPagerAdapter(getActivity().getSupportFragmentManager());
+        adapter.addFragment(new RecentChatsFragment_(), "Recent");
         adapter.addFragment(new ContactsFragment_(), "Contacts");
         viewPager.setAdapter(adapter);
     }
