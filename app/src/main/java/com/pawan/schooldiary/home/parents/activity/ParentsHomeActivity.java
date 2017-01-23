@@ -1,4 +1,4 @@
-package com.pawan.schooldiary.home.parent.activity;
+package com.pawan.schooldiary.home.parents.activity;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -20,10 +20,9 @@ import android.view.MenuItem;
 import com.pawan.schooldiary.R;
 import com.pawan.schooldiary.app.OnBackStackChangedListener;
 import com.pawan.schooldiary.home.model.ViewPagerHelper;
-import com.pawan.schooldiary.home.parent.fragment.home.ParentHomeFragment_;
-import com.pawan.schooldiary.home.teacher.fragment.home.TeacherHomeFragment_;
+import com.pawan.schooldiary.home.parents.fragment.home.ParentsHomeFragment_;
 
-public class ParentHomeActivity extends AppCompatActivity
+public class ParentsHomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,ViewPagerHelper {
 
     private OnBackStackChangedListener onBackStackChangedListener;
@@ -55,7 +54,7 @@ public class ParentHomeActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.content_parent_home, new ParentHomeFragment_())
+                .replace(R.id.content_parent_home, new ParentsHomeFragment_())
                 .commit();
     }
     public void initViewPagerHelper(Fragment fragment) {
@@ -111,7 +110,7 @@ public class ParentHomeActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-        Fragment fragment = new ParentHomeFragment_();
+        Fragment fragment = new ParentsHomeFragment_();
 
         if (id == R.id.nav_camera) {
             // Handle the camera action

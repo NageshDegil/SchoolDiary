@@ -26,7 +26,7 @@
             android:label="@string/title_activity_teacher_home"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".home.parent.activity.ParentHomeActivity"
+            android:name=".home.parents.activity.ParentsHomeActivity"
             android:label="@string/title_activity_parent_home"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>

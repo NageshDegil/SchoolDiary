@@ -1,4 +1,4 @@
-package com.pawan.schooldiary.home.parent.adapter;
+package com.pawan.schooldiary.home.parents.adapter;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
