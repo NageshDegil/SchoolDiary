@@ -12,6 +12,8 @@ import com.pawan.schooldiary.R;
 import com.pawan.schooldiary.home.fragment.contacts.ContactsFragment;
 import com.pawan.schooldiary.home.model.Contact;
 import com.pawan.schooldiary.home.model.User;
+import com.pawan.schooldiary.home.parents.activity.ParentsHomeActivity;
+import com.pawan.schooldiary.home.teacher.activity.TeacherHomeActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -67,8 +69,10 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.MyViewHo
         holder.setOnClickListener(new ItemClickListener() {
             @Override
             public void onClick(View view, int position, boolean isLongClick) {
-                if(fragment instanceof ContactsFragment)
-                    ((ContactsFragment)fragment).loadChat(contact);
+                if(fragment.getActivity() instanceof TeacherHomeActivity)
+                    ((ContactsFragment)fragment).loadChat(contact, R.id.content_teacher_home);
+                else if(fragment.getActivity() instanceof ParentsHomeActivity)
+                    ((ContactsFragment)fragment).loadChat(contact, R.id.content_parent_home);
             }
         });
     }

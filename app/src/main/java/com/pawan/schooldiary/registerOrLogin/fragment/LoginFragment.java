@@ -137,6 +137,7 @@ public class LoginFragment extends Fragment {
             Utils.savePreferenceData(schoolDiaryApplication.getApplicationContext(), Constants.PARENTS_EMAIL_KEY, email);
 
         Utils.savePreferenceData(schoolDiaryApplication.getApplicationContext(), Constants.LOGIN_TYPE, type);
+        Utils.savePreferenceData(schoolDiaryApplication.getApplicationContext(), Constants.IS_LOGIN, true);
     }
 
 }

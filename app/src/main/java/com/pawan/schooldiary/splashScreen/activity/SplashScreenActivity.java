@@ -6,6 +6,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.pawan.schooldiary.R;
+import com.pawan.schooldiary.home.parents.activity.ParentsHomeActivity;
+import com.pawan.schooldiary.home.teacher.activity.TeacherHomeActivity;
+import com.pawan.schooldiary.home.utils.Constants;
+import com.pawan.schooldiary.home.utils.Utils;
 import com.pawan.schooldiary.registerOrLogin.activity.RegisterOrLoginActivity_;
 
 public class SplashScreenActivity extends AppCompatActivity {
@@ -18,9 +22,23 @@ public class SplashScreenActivity extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent intent = new Intent(SplashScreenActivity.this, RegisterOrLoginActivity_.class);
-                startActivity(intent);
+                startActivity();
             }
         }, 1000);
+    }
+
+    private void startActivity() {
+        boolean isLogin = Utils.readPreferenceData(getApplicationContext(), Constants.IS_LOGIN, false);
+        Intent intent;
+        if(isLogin) {
+            if(Utils.readPreferenceData(getApplicationContext(), Constants.LOGIN_TYPE, "").equals("T"))
+                intent = new Intent(SplashScreenActivity.this, TeacherHomeActivity.class);
+            else
+                intent = new Intent(SplashScreenActivity.this, ParentsHomeActivity.class);
+        } else {
+            intent = new Intent(SplashScreenActivity.this, RegisterOrLoginActivity_.class);
+        }
+        startActivity(intent);
+        finish();
     }
 }

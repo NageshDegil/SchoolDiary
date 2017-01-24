@@ -55,6 +55,7 @@ public class ParentsHomeActivity extends AppCompatActivity
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.content_parent_home, new ParentsHomeFragment_())
+                .addToBackStack(null)
                 .commit();
     }
     public void initViewPagerHelper(Fragment fragment) {

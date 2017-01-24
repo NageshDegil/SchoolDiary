@@ -12,4 +12,5 @@ public class Constants {
     public static final String PARENTS_EMAIL_KEY = "parents_email_key";
     public static final String LOGIN_TYPE = "login_type";
     public static final String RECEIVER_EMAIL = "receiver_email";
+    public static final String IS_LOGIN = "is_login";
 }

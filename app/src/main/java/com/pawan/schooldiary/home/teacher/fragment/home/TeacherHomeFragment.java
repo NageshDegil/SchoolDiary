@@ -12,6 +12,7 @@ import com.pawan.schooldiary.home.fragment.recent.RecentChatsFragment_;
 import com.pawan.schooldiary.home.model.ViewPagerHelper;
 import com.pawan.schooldiary.home.teacher.activity.TeacherHomeActivity;
 import com.pawan.schooldiary.home.adapter.ViewPagerAdapter;
+import com.pawan.schooldiary.home.teacher.fragment.group.AddGroupFragment_;
 import com.pawan.schooldiary.home.teacher.fragment.group.TeacherGroupFragment_;
 
 
@@ -40,7 +41,7 @@ public class TeacherHomeFragment extends Fragment implements ViewPagerHelper{
 
     public void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getActivity().getSupportFragmentManager());
-        adapter.addFragment(new TeacherGroupFragment_(), "Group");
+        adapter.addFragment(new AddGroupFragment_(), "Group");
         adapter.addFragment(new RecentChatsFragment_(), "Recent");
         adapter.addFragment(new ContactsFragment_(), "Contacts");
         viewPager.setAdapter(adapter);

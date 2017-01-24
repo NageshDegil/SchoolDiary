@@ -60,6 +60,7 @@ public class TeacherHomeActivity extends AppCompatActivity implements Navigation
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.content_teacher_home, new TeacherHomeFragment_())
+                .addToBackStack(null)
                 .commit();
 
         //onBackStackChangedListener = new OnBackStackChangedListener(getSupportFragmentManager());
@@ -132,6 +133,7 @@ public class TeacherHomeActivity extends AppCompatActivity implements Navigation
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.content_teacher_home, fragment)
+                .addToBackStack(null)
                 .commit();
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

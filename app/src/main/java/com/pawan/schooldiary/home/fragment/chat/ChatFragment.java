@@ -96,7 +96,7 @@ public class ChatFragment extends Fragment {
         {
             @Override
             protected void populateViewHolder(MyViewHolder holder, Chat chat, int position) {
-                if(chat.getWhich().equals("T")) { // compare to login user parents/teacher
+                if(chat.getWhich().equals(Utils.readPreferenceData(getContext(), Constants.LOGIN_TYPE, ""))) { // compare to login user parents/teacher
                     holder.linearLayoutLeft.setVisibility(View.GONE);
                     holder.textViewRightChat.setText(chat.getMsg());
                 } else {
