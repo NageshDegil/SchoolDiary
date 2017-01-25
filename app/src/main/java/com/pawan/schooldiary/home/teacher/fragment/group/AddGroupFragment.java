@@ -10,26 +10,32 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 
 import com.pawan.schooldiary.R;
 import com.pawan.schooldiary.app.SchoolDiaryApplication;
 import com.pawan.schooldiary.home.adapter.ContactAdapter;
 import com.pawan.schooldiary.home.fragment.contacts.ContactsFragment;
+import com.pawan.schooldiary.home.model.Group;
 import com.pawan.schooldiary.home.model.Status;
 import com.pawan.schooldiary.home.model.User;
 import com.pawan.schooldiary.home.service.CommonService;
 import com.pawan.schooldiary.home.teacher.adapter.GroupMemberAdapter;
+import com.pawan.schooldiary.home.teacher.fragment.home.TeacherHomeFragment_;
+import com.pawan.schooldiary.home.teacher.service.TeacherHomeService;
 import com.pawan.schooldiary.home.utils.Constants;
 import com.pawan.schooldiary.home.utils.Utils;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.App;
+import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.ViewById;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import okhttp3.ResponseBody;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -46,22 +52,30 @@ public class AddGroupFragment extends Fragment {
     @ViewById(R.id.button_create_group)
     Button buttonCreateGroup;
 
+    @ViewById(R.id.edit_text_group_name)
+    EditText editTextGroupName;
+
     private GroupMemberAdapter adapter;
     private CommonService commonService;
+    private TeacherHomeService teacherHomeService;
+    private List<String> groupMemberList = new ArrayList<>();
+
+    public List<String> getGroupMemberList() {
+        return groupMemberList;
+    }
+
+    public void setGroupMemberList(List<String> groupMemberList) {
+        this.groupMemberList = groupMemberList;
+    }
 
     @AfterViews
     public void init() {
         commonService = schoolDiaryApplication.retrofit.create(CommonService.class);
+        teacherHomeService = schoolDiaryApplication.retrofit.create(TeacherHomeService.class);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         contactList();
-        /*ViewGroup.MarginLayoutParams marginLayoutParams = (ViewGroup.MarginLayoutParams) recyclerView.getLayoutParams();
-        marginLayoutParams.setMargins(0, 10, 0, 10);
-        recyclerView.setLayoutParams(marginLayoutParams);
-
-        buttonCreateGroup.getLayoutParams();*/
-
     }
 
     private void contactList() {
@@ -83,6 +97,37 @@ public class AddGroupFragment extends Fragment {
                         adapter = new GroupMemberAdapter(users, AddGroupFragment.this);
                         recyclerView.setAdapter(adapter);
                         adapter.notifyDataSetChanged();
+                    }
+                });
+    }
+
+    @Click(R.id.button_create_group)
+    public void createGroup() {
+        Group group = new Group(Utils.getLoggedInEmail(getContext()), editTextGroupName.getText().toString(), groupMemberList.toArray(new String[groupMemberList.size()]));
+        teacherHomeService.addGroup(group)
+                .subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<ResponseBody>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(ResponseBody responseBody) {
+
+                        //TODO create alrt dialog and ok button move to teacher home fragment
+                        getActivity()
+                                .getSupportFragmentManager()
+                                .beginTransaction()
+                                .replace(R.id.content_teacher_home, new TeacherHomeFragment_())
+                                .addToBackStack(null)
+                                .commit();
+
                     }
                 });
     }

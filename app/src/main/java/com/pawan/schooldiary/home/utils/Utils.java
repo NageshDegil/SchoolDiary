@@ -149,4 +149,11 @@ public class Utils {
         else
             Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
     }
+
+    public static String getLoggedInEmail(Context context) {
+        if(Utils.readPreferenceData(context, Constants.LOGIN_TYPE, "").equals("T"))
+            return Utils.readPreferenceData(context, Constants.TEACHER_EMAIL_KEY, "");
+        else
+            return Utils.readPreferenceData(context, Constants.PARENTS_EMAIL_KEY, "");
+    }
 }

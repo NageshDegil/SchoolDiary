@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.pawan.schooldiary.R;
 import com.pawan.schooldiary.home.model.User;
+import com.pawan.schooldiary.home.teacher.fragment.group.AddGroupFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +23,7 @@ import java.util.List;
 
 public class GroupMemberAdapter extends RecyclerView.Adapter<GroupMemberAdapter.MyViewHolder> {
     private List<User> userList;
-    private Fragment fragment;
+    private AddGroupFragment fragment;
     private List<String> stringList = new ArrayList<>();
     private interface ItemClickListener {
         void onClick(View view, int position, boolean isLongClick);
@@ -49,7 +50,7 @@ public class GroupMemberAdapter extends RecyclerView.Adapter<GroupMemberAdapter.
         }
     }
 
-    public GroupMemberAdapter(List<User> userList, Fragment fragment) {
+    public GroupMemberAdapter(List<User> userList, AddGroupFragment fragment) {
         this.userList = userList;
         this.fragment = fragment;
     }
@@ -72,15 +73,9 @@ public class GroupMemberAdapter extends RecyclerView.Adapter<GroupMemberAdapter.
                     stringList.add(user.getEmail());
                 else
                     stringList.remove(user.getEmail());
+                fragment.setGroupMemberList(stringList);
             }
         });
-
-        /*holder.setOnClickListener(new ItemClickListener() {
-            @Override
-            public void onClick(View view, int position, boolean isLongClick) {
-                holder.checkBox.setChecked(true);
-            }
-        });*/
 
     }
 
