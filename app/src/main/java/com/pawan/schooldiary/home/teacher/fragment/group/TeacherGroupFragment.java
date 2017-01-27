@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -21,6 +22,7 @@ import com.pawan.schooldiary.home.model.Status;
 import com.pawan.schooldiary.home.model.User;
 import com.pawan.schooldiary.home.teacher.adapter.GroupAdapter;
 import com.pawan.schooldiary.home.teacher.adapter.GroupMemberAdapter;
+import com.pawan.schooldiary.home.teacher.fragment.groupChat.GroupChatFragment_;
 import com.pawan.schooldiary.home.teacher.service.TeacherHomeService;
 import com.pawan.schooldiary.home.utils.Constants;
 import com.pawan.schooldiary.home.utils.Utils;
@@ -101,10 +103,23 @@ public class TeacherGroupFragment extends Fragment {
 
                     @Override
                     public void onNext(List<Group> groupList ) {
-                        groupAdapter = new GroupAdapter(groupList);
+                        groupAdapter = new GroupAdapter(groupList, TeacherGroupFragment.this);
                         recyclerView.setAdapter(groupAdapter);
                         groupAdapter.notifyDataSetChanged();
                     }
                 });
+    }
+
+    public void loadGroupChatFragment(Group group) {
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("GROUP", group);
+        GroupChatFragment_ groupChatFragment = new GroupChatFragment_();
+        groupChatFragment.setArguments(bundle);
+        getActivity()
+                .getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.content_teacher_home, groupChatFragment)
+                .addToBackStack(null)
+                .commit();
     }
 }

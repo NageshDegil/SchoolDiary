@@ -23,7 +23,7 @@ public class Chat {
     }
 
     public Chat(Context context, String email) {
-        if(which.equals("T")) {
+        if(Utils.readPreferenceData(context, Constants.LOGIN_TYPE, "").equals("T")) {
             this.teacher = Utils.readPreferenceData(context.getApplicationContext(), Constants.TEACHER_EMAIL_KEY, "");
             this.parents = email;
         } else {

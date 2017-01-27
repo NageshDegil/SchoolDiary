@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:tools="http://schemas.android.com/tools"
-android:layout_width="match_parent"
-android:layout_height="match_parent"
-android:background="#ffffff"
-android:orientation="vertical"
-tools:context="com.pawan.schooldiary.home.fragment.chat.ChatFragment">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff"
+    android:orientation="vertical"
+    tools:context="com.pawan.schooldiary.home.teacher.fragment.groupChat.GroupChatFragment"
+    >
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/chat_recycler_view"
@@ -22,4 +23,3 @@ tools:context="com.pawan.schooldiary.home.fragment.chat.ChatFragment">
         android:gravity="bottom" />
 
 </LinearLayout>
-

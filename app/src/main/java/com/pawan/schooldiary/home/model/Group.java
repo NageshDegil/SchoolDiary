@@ -1,12 +1,13 @@
 package com.pawan.schooldiary.home.model;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by pawan on 23/1/17.
  */
 
-public class Group {
+public class Group implements Serializable{
     private String groupName;
     private String groupID;
     private String groupOwner;
@@ -25,5 +26,21 @@ public class Group {
 
     public void setGroupName(String groupName) {
         this.groupName = groupName;
+    }
+
+    public String getGroupID() {
+        return groupID;
+    }
+
+    public List<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(List<User> users) {
+        this.users = users;
+    }
+
+    public void setGroupID(String groupID) {
+        this.groupID = groupID;
     }
 }
