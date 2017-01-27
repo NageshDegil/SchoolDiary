@@ -13,4 +13,9 @@ public class Constants {
     public static final String LOGIN_TYPE = "login_type";
     public static final String RECEIVER_EMAIL = "receiver_email";
     public static final String IS_LOGIN = "is_login";
+
+
+    public static final String GROUP_DETAILS = "group_details";
+
+
 }

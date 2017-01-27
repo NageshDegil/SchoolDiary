@@ -2,7 +2,10 @@ package com.pawan.schooldiary.home.teacher.adapter;
 
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -11,6 +14,7 @@ import com.pawan.schooldiary.R;
 import com.pawan.schooldiary.home.adapter.ContactAdapter;
 import com.pawan.schooldiary.home.model.Group;
 import com.pawan.schooldiary.home.teacher.fragment.group.TeacherGroupFragment;
+import com.pawan.schooldiary.home.utils.Utils;
 
 import org.androidannotations.annotations.ViewById;
 
@@ -56,7 +60,7 @@ public class GroupAdapter extends RecyclerView.Adapter<GroupAdapter.MyViewHolder
     }
 
 
-    public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnCreateContextMenuListener, MenuItem.OnMenuItemClickListener {
         TextView textViewGroupName;
         private ItemClickListener itemClickListener;
 
@@ -64,6 +68,7 @@ public class GroupAdapter extends RecyclerView.Adapter<GroupAdapter.MyViewHolder
             super(itemView);
             textViewGroupName = (TextView) itemView.findViewById(R.id.text_view_group_name);
             itemView.setOnClickListener(this);
+            itemView.setOnCreateContextMenuListener(this);
         }
 
         @Override
@@ -73,6 +78,25 @@ public class GroupAdapter extends RecyclerView.Adapter<GroupAdapter.MyViewHolder
 
         public void setOnClickListener(ItemClickListener itemClickListener) {
             this.itemClickListener = itemClickListener;
+        }
+
+        @Override
+        public void onCreateContextMenu(ContextMenu contextMenu, View view, ContextMenu.ContextMenuInfo contextMenuInfo) {
+            contextMenu.setHeaderTitle("Select The Action");
+            MenuItem groupDetails = contextMenu.add(0, view.getId(), 0, "Group Details");//groupId, itemId, order, title
+            MenuItem delete = contextMenu.add(0, view.getId(), 0, "Delete");
+            groupDetails.setOnMenuItemClickListener(this);
+            delete.setOnMenuItemClickListener(this);
+        }
+
+        @Override
+        public boolean onMenuItemClick(MenuItem menuItem) {
+            if(menuItem.getTitle().equals("Group Details")) {
+                ((TeacherGroupFragment)fragment).loadGroupDetailsFragment(groupNameList.get(getLayoutPosition()));
+            } else if(menuItem.getTitle().equals("Delete")) {
+                Log.e("Click", "delete");
+            }
+            return false;
         }
     }
 }

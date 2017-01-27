@@ -23,7 +23,7 @@ import java.util.List;
 
 public class GroupMemberAdapter extends RecyclerView.Adapter<GroupMemberAdapter.MyViewHolder> {
     private List<User> userList;
-    private AddGroupFragment fragment;
+    private Fragment fragment;
     private List<String> stringList = new ArrayList<>();
     private interface ItemClickListener {
         void onClick(View view, int position, boolean isLongClick);
@@ -50,7 +50,7 @@ public class GroupMemberAdapter extends RecyclerView.Adapter<GroupMemberAdapter.
         }
     }
 
-    public GroupMemberAdapter(List<User> userList, AddGroupFragment fragment) {
+    public GroupMemberAdapter(List<User> userList, Fragment fragment) {
         this.userList = userList;
         this.fragment = fragment;
     }
@@ -73,7 +73,7 @@ public class GroupMemberAdapter extends RecyclerView.Adapter<GroupMemberAdapter.
                     stringList.add(user.getEmail());
                 else
                     stringList.remove(user.getEmail());
-                fragment.setGroupMemberList(stringList);
+                ((AddGroupFragment)fragment).setGroupMemberList(stringList);
             }
         });
 
