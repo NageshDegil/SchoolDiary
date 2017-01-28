@@ -37,4 +37,7 @@ public interface TeacherHomeService {
 
     @POST("/SchoolDiary_web/index.php/remove-members")
     Observable<ResponseBody> removeMembers(@Body Group group);
+
+    @POST("/SchoolDiary_web/index.php/add-members")
+    Observable<ResponseBody> addMembers(@Body Group group);
 }

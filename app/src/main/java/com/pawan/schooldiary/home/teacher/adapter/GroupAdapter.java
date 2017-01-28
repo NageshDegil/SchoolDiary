@@ -84,9 +84,11 @@ public class GroupAdapter extends RecyclerView.Adapter<GroupAdapter.MyViewHolder
         public void onCreateContextMenu(ContextMenu contextMenu, View view, ContextMenu.ContextMenuInfo contextMenuInfo) {
             contextMenu.setHeaderTitle("Select The Action");
             MenuItem groupDetails = contextMenu.add(0, view.getId(), 0, "Group Details");//groupId, itemId, order, title
+            MenuItem addMember = contextMenu.add(0, view.getId(), 0, "Add Member");//groupId, itemId, order, title
             MenuItem delete = contextMenu.add(0, view.getId(), 0, "Delete");
             groupDetails.setOnMenuItemClickListener(this);
             delete.setOnMenuItemClickListener(this);
+            addMember.setOnMenuItemClickListener(this);
         }
 
         @Override
@@ -95,6 +97,8 @@ public class GroupAdapter extends RecyclerView.Adapter<GroupAdapter.MyViewHolder
                 ((TeacherGroupFragment)fragment).loadGroupDetailsFragment(groupNameList.get(getLayoutPosition()));
             } else if(menuItem.getTitle().equals("Delete")) {
                 Log.e("Click", "delete");
+            } else if(menuItem.getTitle().equals("Add Member")) {
+                ((TeacherGroupFragment)fragment).loadAddMemberFragment(groupNameList.get(getLayoutPosition()));
             }
             return false;
         }

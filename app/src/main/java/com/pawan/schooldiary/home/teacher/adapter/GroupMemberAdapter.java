@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.pawan.schooldiary.R;
 import com.pawan.schooldiary.home.model.User;
 import com.pawan.schooldiary.home.teacher.fragment.group.AddGroupFragment;
+import com.pawan.schooldiary.home.teacher.fragment.group.AddMemberFragment;
 import com.pawan.schooldiary.home.teacher.fragment.group.GroupDetailsFragment;
 
 import java.util.ArrayList;
@@ -91,6 +92,8 @@ public class GroupMemberAdapter extends RecyclerView.Adapter<GroupMemberAdapter.
                     ((AddGroupFragment)fragment).setGroupMemberList(stringList);
                 else if(fragment instanceof GroupDetailsFragment)
                     ((GroupDetailsFragment)fragment).setRemoveMemberList(removeMemberList);
+                else if(fragment instanceof AddMemberFragment)
+                    ((AddMemberFragment)fragment).setUserList(removeMemberList);
             }
         });
 

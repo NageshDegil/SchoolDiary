@@ -135,4 +135,17 @@ public class TeacherGroupFragment extends Fragment {
                 .addToBackStack(null)
                 .commit();
     }
+
+    public void loadAddMemberFragment(Group group) {
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(Constants.GROUP_DETAILS, group);
+        AddMemberFragment_ addMemberFragment = new AddMemberFragment_();
+        addMemberFragment.setArguments(bundle);
+        getActivity()
+                .getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.content_teacher_home, addMemberFragment)
+                .addToBackStack(null)
+                .commit();
+    }
 }
