@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.pawan.schooldiary.R;
 import com.pawan.schooldiary.home.model.User;
 import com.pawan.schooldiary.home.teacher.fragment.group.AddGroupFragment;
+import com.pawan.schooldiary.home.teacher.fragment.group.GroupDetailsFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,8 +26,17 @@ public class GroupMemberAdapter extends RecyclerView.Adapter<GroupMemberAdapter.
     private List<User> userList;
     private Fragment fragment;
     private List<String> stringList = new ArrayList<>();
+    private List<User> removeMemberList = new ArrayList<>();
     private interface ItemClickListener {
         void onClick(View view, int position, boolean isLongClick);
+    }
+
+    public List<User> getUserList() {
+        return userList;
+    }
+
+    public void setUserList(List<User> userList) {
+        this.userList = userList;
     }
 
     class MyViewHolder extends RecyclerView.ViewHolder {
@@ -69,11 +79,18 @@ public class GroupMemberAdapter extends RecyclerView.Adapter<GroupMemberAdapter.
         holder.checkBox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(holder.checkBox.isChecked())
+                if(holder.checkBox.isChecked()) {
                     stringList.add(user.getEmail());
-                else
+                    removeMemberList.add(user);
+                } else {
                     stringList.remove(user.getEmail());
-                ((AddGroupFragment)fragment).setGroupMemberList(stringList);
+                    removeMemberList.remove(user);
+                }
+
+                if(fragment instanceof AddGroupFragment)
+                    ((AddGroupFragment)fragment).setGroupMemberList(stringList);
+                else if(fragment instanceof GroupDetailsFragment)
+                    ((GroupDetailsFragment)fragment).setRemoveMemberList(removeMemberList);
             }
         });
 

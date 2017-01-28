@@ -31,4 +31,10 @@ public interface TeacherHomeService {
 
     @POST("/SchoolDiary_web/index.php/get-groups")
     Observable<List<Group>> getGroups(@Body Status status);
+
+    @POST("/SchoolDiary_web/index.php/change-group-name")
+    Observable<Status> changeGroupName(@Body Group group);
+
+    @POST("/SchoolDiary_web/index.php/remove-members")
+    Observable<ResponseBody> removeMembers(@Body Group group);
 }

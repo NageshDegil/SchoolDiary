@@ -20,6 +20,11 @@ public class Group implements Serializable{
         this.groupMembers = groupMembers;
     }
 
+    public Group(String groupID, List<User> users) {
+        this.groupID = groupID;
+        this.users = users;
+    }
+
     public String getGroupName() {
         return groupName;
     }
