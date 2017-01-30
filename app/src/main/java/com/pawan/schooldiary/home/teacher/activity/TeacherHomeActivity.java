@@ -23,6 +23,7 @@ import android.view.MenuItem;
 
 import com.pawan.schooldiary.R;
 import com.pawan.schooldiary.app.BackHandlerInterface;
+import com.pawan.schooldiary.app.IFragmentHelper;
 import com.pawan.schooldiary.app.OnBackStackChangedListener;
 import com.pawan.schooldiary.home.model.ViewPagerHelper;
 import com.pawan.schooldiary.home.teacher.fragment.home.TeacherHomeFragment_;
@@ -31,15 +32,16 @@ import com.pawan.schooldiary.home.utils.Utils;
 import com.pawan.schooldiary.registerOrLogin.activity.RegisterOrLoginActivity_;
 
 
-public class TeacherHomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, ViewPagerHelper {
+public class TeacherHomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, ViewPagerHelper, IFragmentHelper {
     private OnBackStackChangedListener onBackStackChangedListener;
     private ViewPagerHelper viewPagerHelper;
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_teacher_home);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -164,5 +166,10 @@ public class TeacherHomeActivity extends AppCompatActivity implements Navigation
     @Override
     public ViewPager getViewPager() {
         return null;
+    }
+
+    @Override
+    public void setTitle(String title) {
+        getSupportActionBar().setTitle(title);
     }
 }

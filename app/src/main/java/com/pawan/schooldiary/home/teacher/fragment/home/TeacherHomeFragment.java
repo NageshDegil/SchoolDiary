@@ -33,6 +33,7 @@ public class TeacherHomeFragment extends Fragment implements ViewPagerHelper{
 
     @AfterViews
     void init() {
+        ((TeacherHomeActivity)getActivity()).setTitle("Home");
         setupViewPager(viewPager);
         tabLayout.setupWithViewPager(viewPager);
         TeacherHomeActivity teacherHomeActivity = (TeacherHomeActivity) getActivity();
@@ -40,7 +41,7 @@ public class TeacherHomeFragment extends Fragment implements ViewPagerHelper{
     }
 
     public void setupViewPager(ViewPager viewPager) {
-        ViewPagerAdapter adapter = new ViewPagerAdapter(getActivity().getSupportFragmentManager());
+        ViewPagerAdapter adapter = new ViewPagerAdapter(getChildFragmentManager());
         adapter.addFragment(new TeacherGroupFragment_(), "Group");
         adapter.addFragment(new RecentChatsFragment_(), "Recent");
         adapter.addFragment(new ContactsFragment_(), "Contacts");

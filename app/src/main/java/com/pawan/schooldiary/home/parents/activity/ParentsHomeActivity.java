@@ -19,14 +19,14 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.pawan.schooldiary.R;
+import com.pawan.schooldiary.app.IFragmentHelper;
 import com.pawan.schooldiary.app.OnBackStackChangedListener;
 import com.pawan.schooldiary.home.model.ViewPagerHelper;
 import com.pawan.schooldiary.home.parents.fragment.home.ParentsHomeFragment_;
 import com.pawan.schooldiary.home.utils.Utils;
 import com.pawan.schooldiary.registerOrLogin.activity.RegisterOrLoginActivity_;
 
-public class ParentsHomeActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener,ViewPagerHelper {
+public class ParentsHomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, ViewPagerHelper, IFragmentHelper {
 
     private OnBackStackChangedListener onBackStackChangedListener;
     private ViewPagerHelper viewPagerHelper;
@@ -178,5 +178,10 @@ public class ParentsHomeActivity extends AppCompatActivity
     @Override
     public ViewPager getViewPager() {
         return null;
+    }
+
+    @Override
+    public void setTitle(String title) {
+        getSupportActionBar().setTitle(title);
     }
 }

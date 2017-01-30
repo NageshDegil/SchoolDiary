@@ -15,7 +15,6 @@
         <activity android:name=".splashScreen.activity.SplashScreenActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -23,7 +22,6 @@
         <activity android:name=".introScreen.activity.IntroScreenMainActivity" />
         <activity
             android:name=".home.teacher.activity.TeacherHomeActivity"
-            android:label="@string/title_activity_teacher_home"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".home.parents.activity.ParentsHomeActivity"
