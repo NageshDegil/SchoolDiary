@@ -18,6 +18,8 @@ import java.util.List;
 public class FileDBUtils<T> {
 
     public static final String RECENT_CHATS = "recent_chats.json";
+    public static final String GROUPS = "groups.json";
+    public static final String CONTACTS = "contacts.json";
     public static final String USER_DIR = "/db/User";
 
     private Context context;

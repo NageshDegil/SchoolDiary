@@ -6,17 +6,13 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import com.pawan.schooldiary.R;
 import com.pawan.schooldiary.app.SchoolDiaryApplication;
 import com.pawan.schooldiary.home.adapter.ContactAdapter;
 import com.pawan.schooldiary.home.fragment.chat.ChatFragment_;
-import com.pawan.schooldiary.home.fragment.contacts.ContactsFragment;
 import com.pawan.schooldiary.home.model.Chat;
-import com.pawan.schooldiary.home.model.RecentChats;
+import com.pawan.schooldiary.home.model.offline.RecentChats;
 import com.pawan.schooldiary.home.model.User;
 import com.pawan.schooldiary.home.service.CommonService;
 import com.pawan.schooldiary.home.utils.Constants;
@@ -31,7 +27,6 @@ import org.androidannotations.annotations.ViewById;
 import java.util.ArrayList;
 import java.util.List;
 
-import okhttp3.ResponseBody;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;

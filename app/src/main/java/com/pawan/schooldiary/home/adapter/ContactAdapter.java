@@ -76,8 +76,12 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.MyViewHo
                     else if(fragment instanceof ContactsFragment)
                         ((ContactsFragment) fragment).loadChat(contact, R.id.content_teacher_home);
                 }
-                else if(fragment.getActivity() instanceof ParentsHomeActivity)
-                    ((ContactsFragment)fragment).loadChat(contact, R.id.content_parent_home);
+                else if(fragment.getActivity() instanceof ParentsHomeActivity) {
+                    if (fragment instanceof RecentChatsFragment)
+                        ((RecentChatsFragment) fragment).loadChat(contact, R.id.content_parent_home);
+                    else if (fragment instanceof ContactsFragment)
+                        ((ContactsFragment) fragment).loadChat(contact, R.id.content_parent_home);
+                }
             }
         });
     }

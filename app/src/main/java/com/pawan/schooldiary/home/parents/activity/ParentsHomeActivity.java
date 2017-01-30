@@ -1,5 +1,6 @@
 package com.pawan.schooldiary.home.parents.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -21,6 +22,8 @@ import com.pawan.schooldiary.R;
 import com.pawan.schooldiary.app.OnBackStackChangedListener;
 import com.pawan.schooldiary.home.model.ViewPagerHelper;
 import com.pawan.schooldiary.home.parents.fragment.home.ParentsHomeFragment_;
+import com.pawan.schooldiary.home.utils.Utils;
+import com.pawan.schooldiary.registerOrLogin.activity.RegisterOrLoginActivity_;
 
 public class ParentsHomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,ViewPagerHelper {
@@ -36,6 +39,7 @@ public class ParentsHomeActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.hide();
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -109,21 +113,24 @@ public class ParentsHomeActivity extends AppCompatActivity
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.parents_drawer_layout);
         int id = item.getItemId();
         Fragment fragment = new ParentsHomeFragment_();
 
         if (id == R.id.nav_camera) {
             // Handle the camera action
         }  else if (id == R.id.nav_send) {
-
+            Utils.clearPreferences(getApplicationContext());
+            drawer.closeDrawer(GravityCompat.START);
+            Intent intent = new Intent(this, RegisterOrLoginActivity_.class);
+            startActivity(intent);
+            return true;
         }
 
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.content_parent_home, fragment)
                 .commit();
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.parents_drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }

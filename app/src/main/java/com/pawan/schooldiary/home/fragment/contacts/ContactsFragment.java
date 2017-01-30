@@ -14,8 +14,10 @@ import com.pawan.schooldiary.home.fragment.chat.ChatFragment_;
 import com.pawan.schooldiary.home.model.Contact;
 import com.pawan.schooldiary.home.model.Status;
 import com.pawan.schooldiary.home.model.User;
+import com.pawan.schooldiary.home.model.offline.RecentChats;
 import com.pawan.schooldiary.home.service.CommonService;
 import com.pawan.schooldiary.home.utils.Constants;
+import com.pawan.schooldiary.home.utils.FileDBUtils;
 import com.pawan.schooldiary.home.utils.Utils;
 
 import org.androidannotations.annotations.AfterViews;
@@ -42,6 +44,35 @@ public class ContactsFragment extends Fragment {
     private ContactAdapter contactAdapter;
     private List<User> contactList = new ArrayList<>();
     private CommonService commonService;
+    private interface ContactsCallback {
+        public void loadContacts(List<User> userList);
+        public void saveContacts(List<User> userList);
+    }
+
+    private ContactsCallback contactsCallback = new ContactsCallback() {
+        @Override
+        public void loadContacts(List<User> userList) {
+            if(userList != null) {
+                contactAdapter = new ContactAdapter(userList, ContactsFragment.this);
+
+            } else {
+                FileDBUtils<RecentChats> fileDBUtils = new FileDBUtils<>(getContext().getApplicationContext(), FileDBUtils.CONTACTS, RecentChats.class, FileDBUtils.USER_DIR);
+                RecentChats recentChats = fileDBUtils.readObject();
+                if(recentChats != null)
+                    contactAdapter = new ContactAdapter(recentChats.getUserList(), ContactsFragment.this);
+                else
+                    contactAdapter = new ContactAdapter(new ArrayList<User>(), ContactsFragment.this);
+            }
+            recyclerView.setAdapter(contactAdapter);
+            contactAdapter.notifyDataSetChanged();
+        }
+
+        @Override
+        public void saveContacts(List<User> userList) {
+            FileDBUtils<RecentChats> fileDBUtils = new FileDBUtils<>(getContext().getApplicationContext(), FileDBUtils.CONTACTS, RecentChats.class, FileDBUtils.USER_DIR);
+            fileDBUtils.saveObject(new RecentChats(userList));
+        }
+    };
 
     @AfterViews
     void init() {
@@ -63,14 +94,16 @@ public class ContactsFragment extends Fragment {
 
                     @Override
                     public void onError(Throwable e) {
-
+                        if(contactsCallback != null)
+                            contactsCallback.loadContacts(null);
                     }
 
                     @Override
                     public void onNext(List<User> users ) {
-                        contactAdapter = new ContactAdapter(users, ContactsFragment.this);
-                        recyclerView.setAdapter(contactAdapter);
-                        contactAdapter.notifyDataSetChanged();
+                        if(contactsCallback != null) {
+                            contactsCallback.loadContacts(users);
+                            contactsCallback.saveContacts(users);
+                        }
                     }
                 });
     }
@@ -80,7 +113,7 @@ public class ContactsFragment extends Fragment {
         bundle.putParcelable(Constants.RECEIVER_EMAIL, user);
         ChatFragment_ chatFragment = new ChatFragment_();
         chatFragment.setArguments(bundle);
-        getActivity().getSupportFragmentManager().beginTransaction().replace(id, chatFragment).commit();
+        getActivity().getSupportFragmentManager().beginTransaction().replace(id, chatFragment).addToBackStack(null).commit();
     }
 
 }

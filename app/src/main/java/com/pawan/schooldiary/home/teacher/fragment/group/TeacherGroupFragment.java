@@ -20,11 +20,13 @@ import com.pawan.schooldiary.app.SchoolDiaryApplication;
 import com.pawan.schooldiary.home.model.Group;
 import com.pawan.schooldiary.home.model.Status;
 import com.pawan.schooldiary.home.model.User;
+import com.pawan.schooldiary.home.model.offline.Groups;
 import com.pawan.schooldiary.home.teacher.adapter.GroupAdapter;
 import com.pawan.schooldiary.home.teacher.adapter.GroupMemberAdapter;
 import com.pawan.schooldiary.home.teacher.fragment.groupChat.GroupChatFragment_;
 import com.pawan.schooldiary.home.teacher.service.TeacherHomeService;
 import com.pawan.schooldiary.home.utils.Constants;
+import com.pawan.schooldiary.home.utils.FileDBUtils;
 import com.pawan.schooldiary.home.utils.Utils;
 
 import org.androidannotations.annotations.AfterViews;
@@ -52,6 +54,10 @@ public class TeacherGroupFragment extends Fragment {
     private GroupAdapter groupAdapter;
     private List<Group> groupList = new ArrayList<>();
     private TeacherHomeService teacherHomeService;
+    private interface TeacherGroupCallback {
+        public void loadGroups(List<Group> groups);
+        public void saveGroups(Groups groups);
+    }
 
     @AfterViews
     public void init() {
@@ -61,6 +67,31 @@ public class TeacherGroupFragment extends Fragment {
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         getGroups();
     }
+
+    TeacherGroupCallback teacherGroupCallback = new TeacherGroupCallback() {
+
+        @Override
+        public void loadGroups(List<Group> groups) {
+            if(groups != null) {
+                groupAdapter = new GroupAdapter(groups, TeacherGroupFragment.this);
+            } else {
+                FileDBUtils<Groups> fileDBUtils = new FileDBUtils<>(getContext().getApplicationContext(), FileDBUtils.GROUPS, Groups.class, FileDBUtils.USER_DIR);
+                Groups groups1 = fileDBUtils.readObject();
+                if(groups1 != null)
+                    groupAdapter = new GroupAdapter(groups1.getGroups(), TeacherGroupFragment.this);
+                else
+                    groupAdapter = new GroupAdapter(new ArrayList<Group>(), TeacherGroupFragment.this);
+            }
+            recyclerView.setAdapter(groupAdapter);
+            groupAdapter.notifyDataSetChanged();
+        }
+
+        @Override
+        public void saveGroups(Groups groups) {
+            FileDBUtils<Groups> dbUtils = new FileDBUtils<>(getActivity(), FileDBUtils.GROUPS, Groups.class, FileDBUtils.USER_DIR);
+            dbUtils.saveObject(groups);
+        }
+    };
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -99,13 +130,16 @@ public class TeacherGroupFragment extends Fragment {
                     @Override
                     public void onError(Throwable e) {
                         Utils.networkError(getActivity(), "Network Error", "Please check your internet connectivity.", e);
+                        if(teacherGroupCallback != null)
+                            teacherGroupCallback.loadGroups(null);
                     }
 
                     @Override
                     public void onNext(List<Group> groupList ) {
-                        groupAdapter = new GroupAdapter(groupList, TeacherGroupFragment.this);
-                        recyclerView.setAdapter(groupAdapter);
-                        groupAdapter.notifyDataSetChanged();
+                        if(teacherGroupCallback != null) {
+                            teacherGroupCallback.loadGroups(groupList);
+                            teacherGroupCallback.saveGroups(new Groups(groupList));
+                        }
                     }
                 });
     }

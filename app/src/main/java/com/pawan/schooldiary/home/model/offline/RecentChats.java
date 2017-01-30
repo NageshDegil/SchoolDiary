@@ -1,4 +1,6 @@
-package com.pawan.schooldiary.home.model;
+package com.pawan.schooldiary.home.model.offline;
+
+import com.pawan.schooldiary.home.model.User;
 
 import java.util.List;
 import java.util.Map;

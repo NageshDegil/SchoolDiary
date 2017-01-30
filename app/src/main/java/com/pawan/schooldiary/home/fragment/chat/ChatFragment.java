@@ -23,16 +23,11 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.pawan.schooldiary.R;
 import com.pawan.schooldiary.app.SchoolDiaryApplication;
 import com.pawan.schooldiary.home.adapter.ChatAdapter;
-import com.pawan.schooldiary.home.adapter.ContactAdapter;
-import com.pawan.schooldiary.home.fragment.contacts.ContactsFragment;
 import com.pawan.schooldiary.home.model.Chat;
-import com.pawan.schooldiary.home.model.RecentChats;
-import com.pawan.schooldiary.home.model.Status;
 import com.pawan.schooldiary.home.model.User;
 import com.pawan.schooldiary.home.service.CommonService;
 import com.pawan.schooldiary.home.teacher.service.TeacherHomeService;
 import com.pawan.schooldiary.home.utils.Constants;
-import com.pawan.schooldiary.home.utils.FileDBUtils;
 import com.pawan.schooldiary.home.utils.Utils;
 
 import org.androidannotations.annotations.AfterViews;
@@ -41,7 +36,6 @@ import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.ViewById;
 
-import java.util.HashMap;
 import java.util.List;
 
 import okhttp3.ResponseBody;
