@@ -234,7 +234,7 @@ public class ChatFragment extends Fragment {
 
                     @Override
                     public void onError(Throwable e) {
-
+                        Utils.networkError(getActivity(), "Network Error", "Please check your internet connectivity.", e);
                     }
 
                     @Override

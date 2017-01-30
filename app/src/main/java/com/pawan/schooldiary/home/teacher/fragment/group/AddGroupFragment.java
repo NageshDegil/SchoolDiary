@@ -1,6 +1,8 @@
 package com.pawan.schooldiary.home.teacher.fragment.group;
 
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -89,7 +91,7 @@ public class AddGroupFragment extends Fragment {
 
                     @Override
                     public void onError(Throwable e) {
-
+                        Utils.networkError(getActivity(), "Network Error", "Please check your internet connectivity.", e);
                     }
 
                     @Override
@@ -114,22 +116,34 @@ public class AddGroupFragment extends Fragment {
 
                     @Override
                     public void onError(Throwable e) {
-
+                        Utils.networkError(getActivity(), "Network Error", "Please check your internet connectivity.", e);
                     }
 
                     @Override
                     public void onNext(ResponseBody responseBody) {
+                        showAlert("Group Created", "Group is created successfully.");
+                    }
+                });
+    }
 
-                        //TODO create alrt dialog and ok button move to teacher home fragment
+    private void showAlert(String title, String msg) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle(title)
+                .setMessage(msg)
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.cancel();
                         getActivity()
                                 .getSupportFragmentManager()
                                 .beginTransaction()
                                 .replace(R.id.content_teacher_home, new TeacherHomeFragment_())
                                 .addToBackStack(null)
                                 .commit();
-
                     }
                 });
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
     }
 
 }

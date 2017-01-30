@@ -1,6 +1,8 @@
 package com.pawan.schooldiary.home.teacher.fragment.group;
 
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -20,6 +22,7 @@ import com.pawan.schooldiary.home.model.Status;
 import com.pawan.schooldiary.home.model.User;
 import com.pawan.schooldiary.home.service.CommonService;
 import com.pawan.schooldiary.home.teacher.adapter.GroupMemberAdapter;
+import com.pawan.schooldiary.home.teacher.fragment.home.TeacherHomeFragment_;
 import com.pawan.schooldiary.home.teacher.service.TeacherHomeService;
 import com.pawan.schooldiary.home.utils.Constants;
 import com.pawan.schooldiary.home.utils.Utils;
@@ -34,6 +37,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import okhttp3.ResponseBody;
+import retrofit2.adapter.rxjava.HttpException;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -81,7 +85,6 @@ public class AddMemberFragment extends Fragment {
 
     @Click(R.id.button_add_member)
     public void addMember() {
-        // TODO add service to add member in group
         Group sendGroup = new Group(group.getGroupID(), userList);
         teacherHomeService.addMembers(sendGroup)
                 .subscribeOn(Schedulers.newThread())
@@ -94,12 +97,12 @@ public class AddMemberFragment extends Fragment {
 
                     @Override
                     public void onError(Throwable e) {
-
+                        Utils.networkError(getActivity(), "Network Error", "Please check your internet connectivity.", e);
                     }
 
                     @Override
                     public void onNext(ResponseBody responseBody) {
-
+                        showAlert("Member Added", "Member is added in group successfully.");
                     }
                 });
     }
@@ -133,6 +136,26 @@ public class AddMemberFragment extends Fragment {
                         adapter.notifyDataSetChanged();
                     }
                 });
+    }
+
+    private void showAlert(String title, String msg) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle(title)
+                .setMessage(msg)
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.cancel();
+                        getActivity()
+                                .getSupportFragmentManager()
+                                .beginTransaction()
+                                .replace(R.id.content_teacher_home, new TeacherHomeFragment_())
+                                .addToBackStack(null)
+                                .commit();
+                    }
+                });
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
     }
 
 }

@@ -22,6 +22,7 @@ import com.pawan.schooldiary.home.model.User;
 import com.pawan.schooldiary.home.teacher.adapter.GroupMemberAdapter;
 import com.pawan.schooldiary.home.teacher.service.TeacherHomeService;
 import com.pawan.schooldiary.home.utils.Constants;
+import com.pawan.schooldiary.home.utils.Utils;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.App;
@@ -109,7 +110,7 @@ public class GroupDetailsFragment extends Fragment {
 
                     @Override
                     public void onError(Throwable e) {
-
+                        Utils.networkError(getActivity(), "Network Error", "Please check your internet connectivity.", e);
                     }
 
                     @Override
@@ -140,7 +141,7 @@ public class GroupDetailsFragment extends Fragment {
 
                         @Override
                         public void onError(Throwable e) {
-
+                            Utils.networkError(getActivity(), "Network Error", "Please check your internet connectivity.", e);
                         }
 
                         @Override

@@ -1,11 +1,19 @@
 package com.pawan.schooldiary.home.utils;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.widget.Toast;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
+import com.pawan.schooldiary.R;
+import com.pawan.schooldiary.home.teacher.fragment.home.TeacherHomeFragment_;
+
 import java.io.File;
+import java.net.ConnectException;
+
+import retrofit2.adapter.rxjava.HttpException;
 
 /**
  * Created by pawan on 21/1/17.
@@ -155,5 +163,30 @@ public class Utils {
             return Utils.readPreferenceData(context, Constants.TEACHER_EMAIL_KEY, "");
         else
             return Utils.readPreferenceData(context, Constants.PARENTS_EMAIL_KEY, "");
+    }
+
+    public static void networkError(Context context, String title, String msg, Throwable e) {
+        if(e != null) {
+            if(e instanceof HttpException) {
+                if (((HttpException) e).code() == 500) {
+                }
+            } else if(e instanceof ConnectException) {
+                showAlert(context, title, msg);
+            }
+        }
+    }
+
+    private static void showAlert(Context context, String title, String msg) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setTitle(title)
+                .setMessage(msg)
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.cancel();
+                    }
+                });
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
     }
 }

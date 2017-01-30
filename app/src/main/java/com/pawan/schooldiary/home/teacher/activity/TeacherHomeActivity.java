@@ -1,5 +1,6 @@
 package com.pawan.schooldiary.home.teacher.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -26,6 +27,8 @@ import com.pawan.schooldiary.app.OnBackStackChangedListener;
 import com.pawan.schooldiary.home.model.ViewPagerHelper;
 import com.pawan.schooldiary.home.teacher.fragment.home.TeacherHomeFragment_;
 import com.pawan.schooldiary.home.teacher.fragment.profile.ProfileFragment_;
+import com.pawan.schooldiary.home.utils.Utils;
+import com.pawan.schooldiary.registerOrLogin.activity.RegisterOrLoginActivity_;
 
 
 public class TeacherHomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, ViewPagerHelper {
@@ -98,21 +101,23 @@ public class TeacherHomeActivity extends AppCompatActivity implements Navigation
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         int id = item.getItemId();
         Fragment fragment = new TeacherHomeFragment_();
         if (id == R.id.nav_camera) {
             fragment = new ProfileFragment_();
         } else if (id == R.id.nav_send) {
-
+            Utils.clearPreferences(getApplicationContext());
+            drawer.closeDrawer(GravityCompat.START);
+            Intent intent = new Intent(this, RegisterOrLoginActivity_.class);
+            startActivity(intent);
+            return true;
         }
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.content_teacher_home, fragment)
                 .addToBackStack(null)
                 .commit();
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
         return true;
     }
 

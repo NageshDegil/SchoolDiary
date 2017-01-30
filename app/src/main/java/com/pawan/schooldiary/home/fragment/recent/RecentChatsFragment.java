@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import com.pawan.schooldiary.R;
 import com.pawan.schooldiary.app.SchoolDiaryApplication;
 import com.pawan.schooldiary.home.adapter.ContactAdapter;
+import com.pawan.schooldiary.home.fragment.chat.ChatFragment_;
 import com.pawan.schooldiary.home.fragment.contacts.ContactsFragment;
 import com.pawan.schooldiary.home.model.Chat;
 import com.pawan.schooldiary.home.model.RecentChats;
@@ -102,6 +103,7 @@ public class RecentChatsFragment extends Fragment {
 
                     @Override
                     public void onError(Throwable e) {
+                        Utils.networkError(getActivity(), "Network Error", "Please check your internet connectivity.", e);
                         if(recentChatCallback != null)
                             recentChatCallback.loadRecentChats(null);
                     }
@@ -115,5 +117,18 @@ public class RecentChatsFragment extends Fragment {
 
                     }
                 });
+    }
+
+    public void loadChat(User user, int id) {
+        Bundle bundle = new Bundle();
+        bundle.putParcelable(Constants.RECEIVER_EMAIL, user);
+        ChatFragment_ chatFragment = new ChatFragment_();
+        chatFragment.setArguments(bundle);
+        getActivity()
+                .getSupportFragmentManager()
+                .beginTransaction()
+                .replace(id, chatFragment)
+                .addToBackStack(null)
+                .commit();
     }
 }

@@ -144,7 +144,6 @@ public class GroupChatFragment extends Fragment {
 
     @Click(R.id.image_view_send_msg)
     public void sendMsg() {
-        // TODO adding multiple same chat in DB resolve it
         Chat chat = new Chat(Utils.getLoggedInEmail(getContext()), "group@gmail.com", editTextChat.getText().toString(), Utils.readPreferenceData(schoolDiaryApplication.getApplicationContext(), Constants.LOGIN_TYPE, ""));
         databaseReference.child(Constants.DB_NAME).child(createDB(group.getGroupID())).push().setValue(chat);
         for (User user: group.getUsers()) {

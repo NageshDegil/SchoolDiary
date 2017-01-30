@@ -1,6 +1,8 @@
 package com.pawan.schooldiary.registerOrLogin.fragment;
 
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.view.View;
@@ -10,6 +12,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.mobsandgeeks.saripaar.ValidationError;
 import com.mobsandgeeks.saripaar.Validator;
 import com.mobsandgeeks.saripaar.annotation.Email;
@@ -17,6 +20,7 @@ import com.mobsandgeeks.saripaar.annotation.NotEmpty;
 import com.mobsandgeeks.saripaar.annotation.Password;
 import com.pawan.schooldiary.R;
 import com.pawan.schooldiary.app.SchoolDiaryApplication;
+import com.pawan.schooldiary.home.model.Status;
 import com.pawan.schooldiary.home.model.User;
 import com.pawan.schooldiary.home.parents.activity.ParentsHomeActivity;
 import com.pawan.schooldiary.home.teacher.activity.TeacherHomeActivity;
@@ -31,8 +35,11 @@ import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.ViewById;
 
+import java.io.IOException;
+import java.net.ConnectException;
 import java.util.List;
 
+import retrofit2.adapter.rxjava.HttpException;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -106,7 +113,21 @@ public class LoginFragment extends Fragment {
 
                                @Override
                                public void onError(Throwable e) {
-                                   // TODO show alert for error
+                                   try {
+                                       if (e != null && e instanceof HttpException) {
+                                           if (((HttpException) e).code() == 401) {
+                                               Status status = new Gson().fromJson(((HttpException) e).response().errorBody().string().toString(), Status.class);
+                                               if (status.getStatus().equals("invalid username or password")) {
+                                                   showAlert("Incorrect Password", "The password you entered is incorrect. Please try again.");
+                                               } else if (status.getStatus().equals("user does not exist")) {
+                                                   showAlert("User is not Registered", "User does not registered with us. Please create account first.");
+                                               }
+                                           }
+                                       }
+                                       Utils.networkError(getActivity(), "Network Error", "Please check your internet connectivity.", e);
+                                   } catch (Exception e1) {
+                                       Utils.networkError(getActivity(), "Network Error", "Please check your internet connectivity.", e);
+                                   }
                                }
 
                                @Override
@@ -138,6 +159,22 @@ public class LoginFragment extends Fragment {
 
         Utils.savePreferenceData(schoolDiaryApplication.getApplicationContext(), Constants.LOGIN_TYPE, type);
         Utils.savePreferenceData(schoolDiaryApplication.getApplicationContext(), Constants.IS_LOGIN, true);
+    }
+
+    private void showAlert(String title, String msg) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle(title)
+                .setMessage(msg)
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        editTextEmail.getText().clear();
+                        editTextPassword.getText().clear();
+                        dialogInterface.cancel();
+                    }
+                });
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
     }
 
 }
