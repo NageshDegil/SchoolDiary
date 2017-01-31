@@ -30,16 +30,16 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         Log.e("From", "From: " + remoteMessage.getFrom());
         Log.e("Body", "Notification Message Body: " + remoteMessage);
         Log.e("Body", "Notification Message Body: " + remoteMessage.getNotification().getBody());
-        sendNotification(remoteMessage.getNotification().getBody());
+        if(Utils.readPreferenceData(SchoolDiaryApplication.getContext(), Constants.LOGIN_TYPE, "").equals("T") || Utils.readPreferenceData(SchoolDiaryApplication.getContext(), Constants.LOGIN_TYPE, "").equals("P"))
+            sendNotification(remoteMessage.getNotification().getBody());
     }
 
     private void sendNotification(String messageBody) {
-        Intent intent = null;
-        if(Utils.readPreferenceData(SchoolDiaryApplication.getContext(), Constants.LOGIN_TYPE, "").equals("T")) {
+        Intent intent;
+        if(Utils.readPreferenceData(SchoolDiaryApplication.getContext(), Constants.LOGIN_TYPE, "").equals("T"))
             intent = new Intent(this, TeacherHomeActivity.class);
-        } else {
+        else
             intent = new Intent(this, ParentsHomeActivity.class);
-        }
 
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
