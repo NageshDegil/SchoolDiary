@@ -24,6 +24,7 @@ import com.pawan.schooldiary.R;
 import com.pawan.schooldiary.app.SchoolDiaryApplication;
 import com.pawan.schooldiary.home.adapter.ChatAdapter;
 import com.pawan.schooldiary.home.model.Chat;
+import com.pawan.schooldiary.home.model.Status;
 import com.pawan.schooldiary.home.model.User;
 import com.pawan.schooldiary.home.service.CommonService;
 import com.pawan.schooldiary.home.teacher.service.TeacherHomeService;
@@ -179,6 +180,7 @@ public class ChatFragment extends Fragment {
         databaseReference.child(Constants.DB_NAME).child(createDB(user.getEmail())).push().setValue(chat);
         editTextChat.setText("");
         addRecentChat();
+        sendPushNotification();
     }
 
 
@@ -219,6 +221,26 @@ public class ChatFragment extends Fragment {
 
     private void addRecentChat() {
         commonService.addRecentChat(new Chat(getContext(), user.getEmail()))
+                .subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<ResponseBody>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Utils.networkError(getActivity(), "Network Error", "Please check your internet connectivity.", e);
+                    }
+
+                    @Override
+                    public void onNext(ResponseBody responseBody) {
+                    }
+                });
+    }
+
+    private void sendPushNotification() {
+        commonService.sendPushNotification(new Status(user.getToken()))
                 .subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<ResponseBody>() {
                     @Override

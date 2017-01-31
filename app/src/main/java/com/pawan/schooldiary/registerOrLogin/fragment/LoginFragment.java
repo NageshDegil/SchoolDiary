@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -12,6 +13,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.gson.Gson;
 import com.mobsandgeeks.saripaar.ValidationError;
 import com.mobsandgeeks.saripaar.Validator;
@@ -23,6 +25,7 @@ import com.pawan.schooldiary.app.SchoolDiaryApplication;
 import com.pawan.schooldiary.home.model.Status;
 import com.pawan.schooldiary.home.model.User;
 import com.pawan.schooldiary.home.parents.activity.ParentsHomeActivity;
+import com.pawan.schooldiary.home.service.CommonService;
 import com.pawan.schooldiary.home.teacher.activity.TeacherHomeActivity;
 import com.pawan.schooldiary.home.utils.Constants;
 import com.pawan.schooldiary.home.utils.Utils;
@@ -39,6 +42,7 @@ import java.io.IOException;
 import java.net.ConnectException;
 import java.util.List;
 
+import okhttp3.ResponseBody;
 import retrofit2.adapter.rxjava.HttpException;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
@@ -68,12 +72,14 @@ public class LoginFragment extends Fragment {
     EditText editTextPassword;
 
     private LoginService loginService;
+    private CommonService commonService;
     private Validator logInvalidator;
 
     @AfterViews
     public void init() {
         logInvalidator = new Validator(this);
         loginService = schoolDiaryApplication.retrofit.create(LoginService.class);
+        commonService = schoolDiaryApplication.retrofit.create(CommonService.class);
 
         logInvalidator.setValidationListener(new Validator.ValidationListener() {
             @Override
@@ -95,9 +101,9 @@ public class LoginFragment extends Fragment {
             }
         });
     }
+
     @Click(R.id.button_login)
     void login() {
-
         int selectedID = radioGroup.getCheckedRadioButtonId();
         RadioButton radioButton = (RadioButton) getActivity().findViewById(selectedID);
         final String type = radioButton.getText().toString().trim().equals("Teacher") ? "T" : "P";
@@ -139,6 +145,7 @@ public class LoginFragment extends Fragment {
                                        intent = new Intent(getActivity(), ParentsHomeActivity.class);
                                    startActivity(intent);
                                    initSP(type, email);
+                                   // TODO add token to server
                                }
                            }
                 );
@@ -159,6 +166,9 @@ public class LoginFragment extends Fragment {
 
         Utils.savePreferenceData(schoolDiaryApplication.getApplicationContext(), Constants.LOGIN_TYPE, type);
         Utils.savePreferenceData(schoolDiaryApplication.getApplicationContext(), Constants.IS_LOGIN, true);
+        Utils.savePreferenceData(schoolDiaryApplication.getApplicationContext(), Constants.FCM_TOKEN, FirebaseInstanceId.getInstance().getToken());
+        User user = new User(email, FirebaseInstanceId.getInstance().getToken(), type);
+        updateToken(user);
     }
 
     private void showAlert(String title, String msg) {
@@ -175,6 +185,27 @@ public class LoginFragment extends Fragment {
                 });
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
+    }
+
+    private void updateToken(User user) {
+        commonService.updateToken(user)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<ResponseBody>() {
+                               @Override
+                               public void onCompleted() {
+
+                               }
+
+                               @Override
+                               public void onError(Throwable e) {
+                               }
+
+                               @Override
+                               public void onNext(ResponseBody responseBody) {
+                               }
+                           }
+                );
     }
 
 }

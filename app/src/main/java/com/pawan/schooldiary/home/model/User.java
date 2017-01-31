@@ -12,10 +12,34 @@ import java.io.Serializable;
 public class User implements Parcelable, Serializable {
     private String name;
     private String email;
+    private String token;
+    private String which;
 
     public User(String name, String email) {
         this.name = name;
         this.email = email;
+    }
+
+    public User(String email, String token, String which) {
+        this.email = email;
+        this.token = token;
+        this.which = which;
+    }
+
+    public String getWhich() {
+        return which;
+    }
+
+    public void setWhich(String which) {
+        this.which = which;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 
     public String getName() {

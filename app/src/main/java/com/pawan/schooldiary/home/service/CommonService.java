@@ -25,4 +25,10 @@ public interface CommonService {
 
     @POST("/SchoolDiary_web/index.php/get-recent-chats")
     Observable<List<User>> getRecentChats(@Body Chat chat);
+
+    @POST("/SchoolDiary_web/index.php/send-notification")
+    Observable<ResponseBody> sendPushNotification(@Body Status status);
+
+    @POST("/SchoolDiary_web/index.php/update-token")
+    Observable<ResponseBody> updateToken(@Body User user);
 }

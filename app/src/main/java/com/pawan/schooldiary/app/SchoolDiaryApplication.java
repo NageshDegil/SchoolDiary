@@ -1,6 +1,7 @@
 package com.pawan.schooldiary.app;
 
 import android.app.Application;
+import android.content.Context;
 import android.content.Intent;
 
 import org.androidannotations.annotations.EApplication;
@@ -25,11 +26,13 @@ import retrofit2.converter.gson.GsonConverterFactory;
 @EApplication
 public class SchoolDiaryApplication extends Application {
     public Retrofit retrofit;
+    private static Context context;
 
     @Override
     public void onCreate() {
         super.onCreate();
         initApp();
+        context = this;
     }
 
     public void initApp() {
@@ -45,5 +48,9 @@ public class SchoolDiaryApplication extends Application {
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(okHttpClient)
                 .build();
+    }
+
+    public static Context getContext() {
+        return context;
     }
 }
