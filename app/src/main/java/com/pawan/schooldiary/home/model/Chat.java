@@ -119,4 +119,18 @@ public class Chat {
     public void setCreatedAt(long createdAt) {
         this.createdAt = createdAt;
     }
+
+    @Override
+    public String toString() {
+        return "Chat{" +
+                "id=" + id +
+                ", teacher='" + teacher + '\'' +
+                ", parents='" + parents + '\'' +
+                ", msg='" + msg + '\'' +
+                ", teacherFlag=" + teacherFlag +
+                ", parentsFlag=" + parentsFlag +
+                ", createdAt=" + createdAt +
+                ", which='" + which + '\'' +
+                '}';
+    }
 }

@@ -26,6 +26,7 @@ import com.pawan.schooldiary.home.adapter.ChatAdapter;
 import com.pawan.schooldiary.home.fragment.chat.ChatFragment;
 import com.pawan.schooldiary.home.model.Chat;
 import com.pawan.schooldiary.home.model.Group;
+import com.pawan.schooldiary.home.model.Status;
 import com.pawan.schooldiary.home.model.User;
 import com.pawan.schooldiary.home.service.CommonService;
 import com.pawan.schooldiary.home.teacher.service.TeacherHomeService;
@@ -150,8 +151,29 @@ public class GroupChatFragment extends Fragment {
             chat = new Chat(getContext(),user.getEmail(),editTextChat.getText().toString(), Utils.readPreferenceData(schoolDiaryApplication.getApplicationContext(), Constants.LOGIN_TYPE, ""));
             databaseReference.child(Constants.DB_NAME).child(commonDB(user.getEmail())).push().setValue(chat);
             addRecentChat(user);
+            sendPushNotification(user);
         }
         editTextChat.setText("");
+    }
+
+    private void sendPushNotification(User user) {
+        commonService.sendPushNotification(new Status(user.getToken()))
+                .subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<ResponseBody>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Utils.networkError(getActivity(), "Network Error", "Please check your internet connectivity.", e);
+                    }
+
+                    @Override
+                    public void onNext(ResponseBody responseBody) {
+                    }
+                });
     }
 
     private void addRecentChat(User user) {

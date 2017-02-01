@@ -15,13 +15,13 @@
         android:layout_marginTop="30dp"
         android:orientation="horizontal">
 
-        <ImageView
-            android:id="@+id/image_view_left_user"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+        <de.hdodenhof.circleimageview.CircleImageView
             android:layout_marginTop="0dp"
             android:layout_weight="3"
-            android:src="@drawable/user_pratikshya" />
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:id="@+id/image_view_left_user"
+            android:src="@drawable/user_pratikshya"/>
 
         <ImageView
             android:id="@+id/image_view_left_background"
@@ -74,13 +74,13 @@
             android:layout_weight="1"
             android:src="@drawable/arrow_bg1" />
 
-        <ImageView
-            android:id="@+id/image_view_right_user"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+        <de.hdodenhof.circleimageview.CircleImageView
             android:layout_marginTop="0dp"
             android:layout_weight="3"
-            android:src="@drawable/user_pratikshya" />
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:id="@+id/image_view_right_user"
+            android:src="@drawable/user_pratikshya"/>
 
     </LinearLayout>
 

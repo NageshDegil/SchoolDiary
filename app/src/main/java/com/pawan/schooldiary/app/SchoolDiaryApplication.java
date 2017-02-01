@@ -4,6 +4,8 @@ import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 
+import com.google.firebase.database.FirebaseDatabase;
+
 import org.androidannotations.annotations.EApplication;
 
 import java.io.IOException;
@@ -33,6 +35,7 @@ public class SchoolDiaryApplication extends Application {
         super.onCreate();
         initApp();
         context = this;
+        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
     }
 
     public void initApp() {

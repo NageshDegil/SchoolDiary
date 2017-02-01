@@ -1,14 +1,18 @@
 package com.pawan.schooldiary.home.fragment.chat;
 
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,8 +22,11 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.pawan.schooldiary.R;
 import com.pawan.schooldiary.app.SchoolDiaryApplication;
 import com.pawan.schooldiary.home.adapter.ChatAdapter;
@@ -27,6 +34,7 @@ import com.pawan.schooldiary.home.model.Chat;
 import com.pawan.schooldiary.home.model.Status;
 import com.pawan.schooldiary.home.model.User;
 import com.pawan.schooldiary.home.service.CommonService;
+import com.pawan.schooldiary.home.teacher.adapter.GroupAdapter;
 import com.pawan.schooldiary.home.teacher.service.TeacherHomeService;
 import com.pawan.schooldiary.home.utils.Constants;
 import com.pawan.schooldiary.home.utils.Utils;
@@ -39,6 +47,7 @@ import org.androidannotations.annotations.ViewById;
 
 import java.util.List;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import okhttp3.ResponseBody;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
@@ -67,6 +76,9 @@ public class ChatFragment extends Fragment {
     private LinearLayoutManager linearLayoutManager;
     private User user;
     private CommonService commonService;
+    private interface ItemClickListener {
+        void onClick(View view, int position);
+    }
 
     @Nullable
     @Override
@@ -90,13 +102,63 @@ public class ChatFragment extends Fragment {
                 databaseReference.child(Constants.DB_NAME).child(createDB(user.getEmail())))
         {
             @Override
-            protected void populateViewHolder(MyViewHolder holder, Chat chat, int position) {
-                if(chat.getWhich().equals(Utils.readPreferenceData(getContext(), Constants.LOGIN_TYPE, ""))) { // compare to login user parents/teacher
-                    holder.linearLayoutLeft.setVisibility(View.GONE);
-                    holder.textViewRightChat.setText(chat.getMsg());
+            protected void populateViewHolder(final MyViewHolder holder, Chat chat, int position) {
+                boolean flag;
+                if(Utils.readPreferenceData(getContext(), Constants.LOGIN_TYPE, "").equals("T")) {
+                    flag = chat.getTeacherFlag() == 0 ? true : false;
                 } else {
+                    flag = chat.getParentsFlag() == 0 ? true : false;
+                }
+                if(flag) {
+                    if (chat.getWhich().equals(Utils.readPreferenceData(getContext(), Constants.LOGIN_TYPE, ""))) { // compare to login user parents/teacher
+                        holder.linearLayoutLeft.setVisibility(View.GONE);
+                        holder.textViewRightChat.setText(chat.getMsg());
+                        holder.imageViewRightUser.setImageDrawable(ContextCompat.getDrawable(getContext(),
+                                R.drawable.facebook_logo));
+                    } else {
+                        holder.linearLayoutRight.setVisibility(View.GONE);
+                        holder.textViewLeftChat.setText(chat.getMsg());
+                        holder.imageViewLeftUser.setImageDrawable(ContextCompat.getDrawable(getContext(),
+                                R.drawable.facebook_logo));
+                    }
+
+                    holder.setOnClickListener(new ItemClickListener() {
+                        @Override
+                        public void onClick(View view, final int position) {
+                            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                            builder.setTitle("Delete Chat")
+                                    .setMessage("Do you want to this chat message?")
+                                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialogInterface, int i) {
+                                            final String key = getRef(position).getKey();
+                                            databaseReference.child(Constants.DB_NAME).child(createDB(user.getEmail())).child(key).addListenerForSingleValueEvent(new ValueEventListener() {
+                                                public void onDataChange(DataSnapshot dataSnapshot) {
+                                                    Chat currentChat = dataSnapshot.getValue(Chat.class);
+                                                    deleteChat(currentChat, key);
+                                                }
+
+                                                @Override
+                                                public void onCancelled(DatabaseError databaseError) {
+
+                                                }
+
+                                            });
+                                            dialogInterface.cancel();
+                                        }
+                                    }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    dialogInterface.cancel();
+                                }
+                            });
+                            AlertDialog alertDialog = builder.create();
+                            alertDialog.show();
+                        }
+                    });
+                } else {
+                    holder.linearLayoutLeft.setVisibility(View.GONE);
                     holder.linearLayoutRight.setVisibility(View.GONE);
-                    holder.textViewLeftChat.setText(chat.getMsg());
                 }
             }
         };
@@ -184,19 +246,30 @@ public class ChatFragment extends Fragment {
     }
 
 
-    public static class MyViewHolder extends RecyclerView.ViewHolder {
+    public static class MyViewHolder extends RecyclerView.ViewHolder implements  View.OnClickListener {
         public TextView textViewLeftChat, textViewRightChat;
-        public ImageView imageViewLeftUser, imageViewRightUser;
+        public CircleImageView imageViewLeftUser, imageViewRightUser;
         public LinearLayout linearLayoutLeft, linearLayoutRight;
+        private ItemClickListener itemClickListener;
 
         public MyViewHolder(View itemView) {
             super(itemView);
             textViewLeftChat = (TextView) itemView.findViewById(R.id.text_view_left_chat);
             textViewRightChat = (TextView) itemView.findViewById(R.id.text_view_right_chat);
-            imageViewLeftUser = (ImageView) itemView.findViewById(R.id.image_view_left_user);
-            imageViewRightUser = (ImageView) itemView.findViewById(R.id.image_view_right_user);
+            imageViewLeftUser = (CircleImageView) itemView.findViewById(R.id.image_view_left_user);
+            imageViewRightUser = (CircleImageView) itemView.findViewById(R.id.image_view_right_user);
             linearLayoutLeft = (LinearLayout) itemView.findViewById(R.id.linear_layout_left);
             linearLayoutRight = (LinearLayout) itemView.findViewById(R.id.linear_layout_right);
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View view) {
+            itemClickListener.onClick(view, getLayoutPosition());
+        }
+
+        public void setOnClickListener(ItemClickListener itemClickListener) {
+            this.itemClickListener = itemClickListener;
         }
     }
 
@@ -257,5 +330,15 @@ public class ChatFragment extends Fragment {
                     public void onNext(ResponseBody responseBody) {
                     }
                 });
+    }
+
+    private void deleteChat(Chat chat, String key) {
+        if (Utils.readPreferenceData(getContext(), Constants.LOGIN_TYPE, "").equals("T")) {
+            chat.setTeacherFlag(1);
+        } else {
+            chat.setParentsFlag(1);
+        }
+        databaseReference.child(Constants.DB_NAME).child(createDB(user.getEmail())).child(key).setValue(chat);
+        firebaseAdapter.notifyDataSetChanged();
     }
 }
