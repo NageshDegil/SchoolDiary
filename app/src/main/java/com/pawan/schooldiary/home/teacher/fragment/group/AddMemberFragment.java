@@ -12,6 +12,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
 
 import com.pawan.schooldiary.R;
 import com.pawan.schooldiary.app.SchoolDiaryApplication;
@@ -50,6 +52,9 @@ public class AddMemberFragment extends Fragment {
 
     @ViewById(R.id.recycler_view)
     RecyclerView recyclerView;
+
+    @ViewById(R.id.button_add_member)
+    Button buttonAddMember;
 
     private TeacherHomeService teacherHomeService;
     private CommonService commonService;
@@ -124,14 +129,14 @@ public class AddMemberFragment extends Fragment {
 
                     @Override
                     public void onNext(List<User> users ) {
-                        List<User> list = new ArrayList<User>();
                         for (User user:users) {
                             for (User localUser:group.getUsers()) {
-                                if(!user.getEmail().equals(localUser.getEmail()))
-                                    list.add(user);
+                                if(!user.getEmail().equals(localUser.getEmail())) {
+                                    users.remove(user);
+                                }
                             }
                         }
-                        adapter = new GroupMemberAdapter(list, AddMemberFragment.this);
+                        adapter = new GroupMemberAdapter(users, AddMemberFragment.this);
                         recyclerView.setAdapter(adapter);
                         adapter.notifyDataSetChanged();
                     }

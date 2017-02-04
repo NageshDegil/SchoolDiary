@@ -6,9 +6,14 @@ import com.pawan.schooldiary.home.model.User;
 
 import java.util.List;
 
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
+import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.Part;
 import rx.Observable;
 
 /**
@@ -31,4 +36,8 @@ public interface CommonService {
 
     @POST("/SchoolDiary_web/index.php/update-token")
     Observable<ResponseBody> updateToken(@Body User user);
+
+    @Multipart
+    @POST("/SchoolDiary_web/index.php/upload-picture")
+    Call<ResponseBody> uploadProfilePic(@Part("profile_pic") RequestBody description, @Part MultipartBody.Part file);
 }

@@ -3,14 +3,19 @@ package com.pawan.schooldiary.home.utils;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.os.Looper;
 import android.widget.Toast;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
+import com.bumptech.glide.Glide;
 import com.pawan.schooldiary.R;
 import com.pawan.schooldiary.home.teacher.fragment.home.TeacherHomeFragment_;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.ConnectException;
 
 import retrofit2.adapter.rxjava.HttpException;
@@ -188,5 +193,33 @@ public class Utils {
                 });
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
+    }
+
+    public static void copyInputStreamToFile(InputStream in, File file) {
+        try {
+            OutputStream out = new FileOutputStream(file);
+            byte[] buf = new byte[1024];
+            int len;
+            while ((len = in.read(buf)) > 0) {
+                out.write(buf, 0, len);
+            }
+            out.close();
+            in.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void clearGlideCache(final Context context) {
+        Glide.get(context).clearMemory();
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                Looper.prepare();
+                Glide.get(context).clearDiskCache();
+            }
+        };
+
+        new Thread(runnable).start();
     }
 }

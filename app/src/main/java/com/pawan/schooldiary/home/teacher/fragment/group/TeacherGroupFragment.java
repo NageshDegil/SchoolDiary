@@ -68,7 +68,7 @@ public class TeacherGroupFragment extends Fragment {
         getGroups();
     }
 
-    TeacherGroupCallback teacherGroupCallback = new TeacherGroupCallback() {
+    public TeacherGroupCallback teacherGroupCallback = new TeacherGroupCallback() {
 
         @Override
         public void loadGroups(List<Group> groups) {

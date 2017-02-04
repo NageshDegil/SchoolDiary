@@ -46,7 +46,7 @@ public class SchoolDiaryApplication extends Application {
                 .build();
 
         retrofit = new Retrofit.Builder()
-                .baseUrl("http://192.168.1.3/")
+                .baseUrl("http://192.168.1.6/")
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(okHttpClient)
