@@ -58,9 +58,6 @@ public class ProfileFragment extends Fragment {
     @App
     SchoolDiaryApplication schoolDiaryApplication;
 
-    @ViewById(R.id.button_upload_pic)
-    Button buttonUploadPic;
-
     private String photoFileName;
     private CommonService commonService;
 
@@ -70,7 +67,6 @@ public class ProfileFragment extends Fragment {
         photoFileName = Utils.getLoggedInEmail(getContext()) + ".png";
     }
 
-    @Click(R.id.button_upload_pic)
     public void changeProfilePicture() {
         // TODO add alert dialog for choose profile pic from camera | Gallery
     }
