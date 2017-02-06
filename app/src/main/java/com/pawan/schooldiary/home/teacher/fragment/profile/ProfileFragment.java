@@ -20,8 +20,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -58,13 +61,45 @@ public class ProfileFragment extends Fragment {
     @App
     SchoolDiaryApplication schoolDiaryApplication;
 
+    @ViewById(R.id.spinner_text_gender)
+    Spinner spinnerTextGender;
+
+    @ViewById(R.id.linear_layout_edit)
+    LinearLayout linearLayoutEdit;
+
+    @ViewById(R.id.linear_layout_text)
+    LinearLayout linearLayoutText;
+
+    @ViewById(R.id.text_view_edit_save)
+    TextView textViewEditSave;
+
     private String photoFileName;
     private CommonService commonService;
+    private boolean flag;
 
     @AfterViews
     public void init() {
         commonService = schoolDiaryApplication.retrofit.create(CommonService.class);
         photoFileName = Utils.getLoggedInEmail(getContext()) + ".png";
+        ArrayAdapter adapterForGender = ArrayAdapter.createFromResource(getActivity(), R.array.gender, R.layout.spinner_item_layout);
+        adapterForGender.setDropDownViewResource(R.layout.spinner_dropdown_item_layout);
+        spinnerTextGender.setAdapter(adapterForGender);
+        linearLayoutEdit.setVisibility(View.GONE);
+    }
+
+    @Click(R.id.text_view_edit_save)
+    public void updateProfileData() {
+        if(!flag) {
+            // edit
+            linearLayoutEdit.setVisibility(View.VISIBLE);
+            linearLayoutText.setVisibility(View.GONE);
+            flag = true;
+        } else {
+            // save
+            linearLayoutEdit.setVisibility(View.GONE);
+            linearLayoutText.setVisibility(View.VISIBLE);
+            flag = false;
+        }
     }
 
     public void changeProfilePicture() {
