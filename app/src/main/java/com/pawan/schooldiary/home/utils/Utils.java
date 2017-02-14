@@ -154,8 +154,6 @@ public class Utils {
         }
     }
 
-
-
     public static void generateToast(Context context, String message, boolean flag) {
         if(flag)
             Toast.makeText(context, message, Toast.LENGTH_LONG).show();
