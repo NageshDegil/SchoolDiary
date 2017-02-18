@@ -15,7 +15,7 @@
 
     <ImageView
         android:id="@+id/image_view_user"
-        android:src="@drawable/user_pratikshya"
+        android:src="@mipmap/ic_launcher"
         android:layout_weight="0.4"
         android:background="@drawable/circular_image"
         android:layout_width="match_parent"

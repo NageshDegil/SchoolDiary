@@ -27,7 +27,7 @@ import com.pawan.schooldiary.app.IFragmentHelper;
 import com.pawan.schooldiary.app.OnBackStackChangedListener;
 import com.pawan.schooldiary.home.model.ViewPagerHelper;
 import com.pawan.schooldiary.home.teacher.fragment.home.TeacherHomeFragment_;
-import com.pawan.schooldiary.home.teacher.fragment.profile.ProfileFragment_;
+import com.pawan.schooldiary.home.teacher.fragment.profile.TeacherProfileFragment_;
 import com.pawan.schooldiary.home.utils.Utils;
 import com.pawan.schooldiary.registerOrLogin.activity.RegisterOrLoginActivity_;
 
@@ -107,7 +107,7 @@ public class TeacherHomeActivity extends AppCompatActivity implements Navigation
         int id = item.getItemId();
         Fragment fragment = new TeacherHomeFragment_();
         if (id == R.id.nav_camera) {
-            fragment = new ProfileFragment_();
+            fragment = new TeacherProfileFragment_();
         } else if (id == R.id.nav_send) {
             Utils.clearPreferences(getApplicationContext());
             drawer.closeDrawer(GravityCompat.START);
