@@ -42,6 +42,8 @@ public class TeacherHomeActivity extends AppCompatActivity implements Navigation
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_teacher_home);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle("TeacherHomeActivity");
+        toolbar.setTitleTextColor(getResources().getColor(R.color.colorAccent));
         setSupportActionBar(toolbar);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -76,8 +78,6 @@ public class TeacherHomeActivity extends AppCompatActivity implements Navigation
     public void initViewPagerHelper(Fragment fragment) {
         viewPagerHelper = (ViewPagerHelper) fragment;
     }
-
-
 
     @Override
     public void onBackPressed() {

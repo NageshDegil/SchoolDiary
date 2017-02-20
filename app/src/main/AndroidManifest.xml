@@ -5,7 +5,9 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" android:maxSdkVersion="23" />
+    <uses-permission
+        android:name="android.permission.READ_EXTERNAL_STORAGE"
+        android:maxSdkVersion="23" />
 
     <application
         android:name=".app.SchoolDiaryApplication_"
@@ -17,28 +19,27 @@
         <activity android:name=".splashScreen.activity.SplashScreenActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity android:name=".registerOrLogin.activity.RegisterOrLoginActivity_" />
-        <activity android:name=".introScreen.activity.IntroScreenMainActivity" />
         <activity
             android:name=".home.teacher.activity.TeacherHomeActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".home.parents.activity.ParentsHomeActivity"
             android:label="@string/title_activity_parent_home"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
-        <service
-            android:name=".home.service.MyFirebaseMessagingService">
+            android:theme="@style/AppTheme.NoActionBar" />
+
+        <service android:name=".home.service.MyFirebaseMessagingService">
             <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-        <service
-            android:name=".home.service.FirebaseInstanceIDService">
+        <service android:name=".home.service.FirebaseInstanceIDService">
             <intent-filter>
-                <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
 

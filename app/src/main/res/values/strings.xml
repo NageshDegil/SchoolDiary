@@ -13,4 +13,5 @@
     <string name="btn_link_to_login">Already registred! Login Me.</string>
     <string name="hint_name">Fullname</string>
     <string name="title_activity_parent_home">ParentHomeActivity</string>
+
 </resources>

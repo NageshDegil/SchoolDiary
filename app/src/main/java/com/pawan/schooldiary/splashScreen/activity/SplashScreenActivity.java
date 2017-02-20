@@ -2,8 +2,10 @@ package com.pawan.schooldiary.splashScreen.activity;
 
 import android.content.Intent;
 import android.os.Handler;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Html;
 
 import com.pawan.schooldiary.R;
 import com.pawan.schooldiary.home.parents.activity.ParentsHomeActivity;
@@ -18,6 +20,8 @@ public class SplashScreenActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
+
+        getSupportActionBar().setTitle(Html.fromHtml("<font color='#F39122'>School Diary</font>"));
 
         new Handler().postDelayed(new Runnable() {
             @Override
