@@ -14,4 +14,20 @@
     <string name="hint_name">Fullname</string>
     <string name="title_activity_parent_home">ParentHomeActivity</string>
 
+    <string name="next">NEXT</string>
+    <string name="skip">SKIP</string>
+    <string name="start">GOT IT</string>
+
+    <string name="slide_1_title">Interaction!</string>
+    <string name="slide_1_desc">The easiest way to interact with teacher and parent!</string>
+
+    <string name="slide_2_title">Student Details!</string>
+    <string name="slide_2_desc">Student details in your hand!</string>
+
+    <string name="slide_3_title">Schedule!</string>
+    <string name="slide_3_desc">Schedule of all function held on school!</string>
+
+    <string name="slide_4_title">All fun.!</string>
+    <string name="slide_4_desc">Fun with this School Diary app!</string>
+
 </resources>

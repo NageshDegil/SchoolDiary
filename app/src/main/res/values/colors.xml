@@ -17,4 +17,36 @@
     <color name="lbl_name">#333333</color>
     <color name="btn_logut_bg">#ff6861</color>
 
+    <!-- Screens background color-->
+    <color name="bg_screen1">#4349b4</color>
+    <color name="bg_screen2">#82669b</color>
+    <color name="bg_screen3">#ba5051</color>
+    <color name="bg_screen4">#7A6860</color>
+
+    <!-- dots inactive colors -->
+    <color name="dot_dark_screen1">#303481</color>
+    <color name="dot_dark_screen2">#783DAC</color>
+    <color name="dot_dark_screen3">#873A3B</color>
+    <color name="dot_dark_screen4">#473D38</color>
+
+    <!-- dots active colors -->
+    <color name="dot_light_screen1">#8185C0</color>
+    <color name="dot_light_screen2">#C298E7</color>
+    <color name="dot_light_screen3">#C59091</color>
+    <color name="dot_light_screen4">#C68061</color>
+
+    <array name="array_dot_active">
+        <item>@color/dot_light_screen1</item>
+        <item>@color/dot_light_screen2</item>
+        <item>@color/dot_light_screen3</item>
+        <item>@color/dot_light_screen4</item>
+    </array>
+
+    <array name="array_dot_inactive">
+        <item>@color/dot_dark_screen1</item>
+        <item>@color/dot_dark_screen2</item>
+        <item>@color/dot_dark_screen3</item>
+        <item>@color/dot_dark_screen4</item>
+    </array>
+
 </resources>

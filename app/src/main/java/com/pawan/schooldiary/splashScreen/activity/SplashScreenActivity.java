@@ -2,17 +2,15 @@ package com.pawan.schooldiary.splashScreen.activity;
 
 import android.content.Intent;
 import android.os.Handler;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.Html;
 
 import com.pawan.schooldiary.R;
 import com.pawan.schooldiary.home.parents.activity.ParentsHomeActivity;
 import com.pawan.schooldiary.home.teacher.activity.TeacherHomeActivity;
 import com.pawan.schooldiary.home.utils.Constants;
 import com.pawan.schooldiary.home.utils.Utils;
-import com.pawan.schooldiary.registerOrLogin.activity.RegisterOrLoginActivity_;
+import com.pawan.schooldiary.introScreen.activity.IntroScreenActivity;
 
 public class SplashScreenActivity extends AppCompatActivity {
 
@@ -21,7 +19,7 @@ public class SplashScreenActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
 
-        getSupportActionBar().setTitle(Html.fromHtml("<font color='#F39122'>School Diary</font>"));
+        //getSupportActionBar().setTitle(Html.fromHtml("<font color='#F39122'>School Diary</font>"));
 
         new Handler().postDelayed(new Runnable() {
             @Override
@@ -40,7 +38,7 @@ public class SplashScreenActivity extends AppCompatActivity {
             else
                 intent = new Intent(SplashScreenActivity.this, ParentsHomeActivity.class);
         } else {
-            intent = new Intent(SplashScreenActivity.this, RegisterOrLoginActivity_.class);
+            intent = new Intent(SplashScreenActivity.this, IntroScreenActivity.class);
         }
         startActivity(intent);
         finish();
