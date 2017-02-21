@@ -25,7 +25,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/contact_name"
-            android:textColor="#000"
+            android:textColor="@color/primary_text"
             android:layout_marginTop="15dp"
             android:layout_alignParentTop="true"
             android:text="Name"
@@ -38,7 +38,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/contact_email"
             android:text="Email"
-            android:textColor="#000"
+            android:textColor="@color/primary_text"
             android:layout_marginTop="5dp"
             android:textAppearance="?android:attr/textAppearanceSmall"
 

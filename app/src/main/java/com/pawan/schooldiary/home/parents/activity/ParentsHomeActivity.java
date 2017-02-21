@@ -40,7 +40,7 @@ public class ParentsHomeActivity extends AppCompatActivity implements Navigation
         setContentView(R.layout.activity_parent_home);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("ParentHomeActivity");
-        toolbar.setTitleTextColor(getResources().getColor(R.color.colorAccent));
+        toolbar.setTitleTextColor(getResources().getColor(R.color.colorprimarylight));
         setSupportActionBar(toolbar);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);

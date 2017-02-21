@@ -43,7 +43,7 @@ public class TeacherHomeActivity extends AppCompatActivity implements Navigation
         setContentView(R.layout.activity_teacher_home);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("TeacherHomeActivity");
-        toolbar.setTitleTextColor(getResources().getColor(R.color.colorAccent));
+        toolbar.setTitleTextColor(getResources().getColor(R.color.colorprimarylight));
         setSupportActionBar(toolbar);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);

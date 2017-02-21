@@ -17,7 +17,7 @@ public class RegisterOrLoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_or_login);
 
-        getSupportActionBar().setTitle(Html.fromHtml("<font color='#F39122'>School Diary</font>"));
+        getSupportActionBar().setTitle(Html.fromHtml("<font color='#B2DFDB'>School Diary</font>"));
 
         getSupportFragmentManager()
                 .beginTransaction()

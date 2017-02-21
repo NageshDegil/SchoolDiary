@@ -1,71 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:background="@color/bg_login_register"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:gravity="center"
+    android:background="@color/colorprimarylight"
     android:orientation="vertical"
-    android:padding="10dp" >
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_horizontal_margin"
+    android:paddingBottom="@dimen/activity_horizontal_margin">
 
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:orientation="vertical"
-        android:paddingLeft="20dp"
-        android:paddingRight="20dp" >
+        android:orientation="vertical">
 
         <EditText
             android:id="@+id/name"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
-            android:background="@color/white"
+            android:background="@drawable/edit_box"
             android:hint="@string/hint_name"
             android:padding="10dp"
             android:singleLine="true"
             android:inputType="textCapWords"
-            android:textColor="@color/input_register"
-            android:textColorHint="@color/input_register_hint" />
+            android:textColor="@color/primary_text"
+            android:textColorHint="@color/secondary_text" />
 
         <EditText
             android:id="@+id/email"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
-            android:background="@color/white"
+            android:background="@drawable/edit_box"
             android:hint="@string/hint_email"
             android:inputType="textEmailAddress"
             android:padding="10dp"
             android:singleLine="true"
-            android:textColor="@color/input_register"
-            android:textColorHint="@color/input_register_hint" />
+            android:textColor="@color/primary_text"
+            android:textColorHint="@color/secondary_text"/>
 
         <EditText
             android:id="@+id/password"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
-            android:background="@color/white"
+            android:background="@drawable/edit_box"
             android:hint="@string/hint_password"
             android:inputType="textPassword"
             android:padding="10dp"
             android:singleLine="true"
-            android:textColor="@color/input_register"
-            android:textColorHint="@color/input_register_hint" />
+            android:textColor="@color/primary_text"
+            android:textColorHint="@color/secondary_text" />
 
         <EditText
             android:id="@+id/confirm_password"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
-            android:background="@color/white"
+            android:background="@drawable/edit_box"
             android:hint="@string/hint_confirm_password"
             android:inputType="textPassword"
             android:padding="10dp"
             android:singleLine="true"
-            android:textColor="@color/input_register"
-            android:textColorHint="@color/input_register_hint" />
+            android:textColor="@color/primary_text"
+            android:textColorHint="@color/secondary_text" />
 
         <RadioGroup
             android:orientation="horizontal"
@@ -97,7 +98,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:background="@color/white"
-            android:textColor="#227644"
+            android:textColor="@color/colorPrimary"
             android:textStyle="bold"
             android:onClick="Signup"
             android:layout_marginTop="24dp"
@@ -117,7 +118,7 @@
             android:text="@string/btn_link_to_login"
             android:textAllCaps="false"
             android:textColor="@color/colorAccent"
-            android:textSize="15dp"
+            android:textSize="15sp"
             />
     </LinearLayout>
 </LinearLayout>
