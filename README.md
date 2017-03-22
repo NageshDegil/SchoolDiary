@@ -1,1 +1,2 @@
 # SchoolDiary
+> **School Diary provides a single interface, Mobile app for all the communication that happen between a parent , teacher. Message can be sent one to one or in a group to parents. Push notification are instantly sent to parent informing about an incoming message.School Diary provides a single interface, Mobile app for all the communication that happen between a parent , teacher. Message can be sent one to one or in a group to parents. Push notification are instantly sent to parent informing about an incoming message.**
